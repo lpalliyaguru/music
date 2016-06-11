@@ -49,7 +49,7 @@
             </div>
             <a class="nav-link profile" href="#/pages/profile">
               <img src="dist/images/user.png" alt="" class="img20_20 img-circle">
-              <span class="label helper-tooltip-measured">Joao Garin</span>
+              <span class="label helper-tooltip-measured">{{ user.name }}</span>
             </a>
 
           </li>
@@ -197,7 +197,7 @@
                   <i class="icon fa fa-angle-right"></i>
                   <span class="label helper-tooltip-measured">500</span>
                 </a>
-              </li>s
+              </li>
             </ul>
 
           </li>
@@ -254,7 +254,6 @@
     <div class="playlist-item-list music-listing--queue" ng-show="navigation.navigationState.playlist">
 
       <div class="music-listing__songs">
-
         <div class="music-listing__row" ng-repeat="song in generalPlaylist.audioPlaylist" ng-class="{ active: mediaPlayer.playing && mediaPlayer.currentTrack-1 === $index }"
              ui-draggable="true" drag="song" on-drop-success="generalPlaylist.removeSong($index)" ui-on-drop="generalPlaylist.dropSong($data, $index)">
 
@@ -273,12 +272,13 @@
               <img ng-src="{{song.image}}" alt="song__image"/>
             </div>
 
-            <div class="music-listing__artist-name" ng-click="mediaPlayer.playPause($index)">
-              {{ song.artist }}
-            </div>
+
             <div class="music-listing__song-name" ng-click="mediaPlayer.playPause($index)">
-              {{ song.title }}
+              {{ song.display_name }}
             </div>
+            <!--<div class="music-listing__artist-name" ng-click="mediaPlayer.playPause($index)">
+              {{ song.artist.name }}
+            </div>-->
 
           </div>
 

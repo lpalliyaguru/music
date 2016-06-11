@@ -3,7 +3,7 @@
  Initialize the Angular App
  **************************/
 
-var app = angular.module("app", ["ngRoute", "ngAnimate","app.config", "ui.bootstrap", "mgo-angular-wizard", "ui.tree", "ngMap", "ngTagsInput", "app.ui.ctrls", "app.ui.services", "app.controllers", "app.directives", "app.form.validation", "app.ui.form.ctrls", "app.ui.form.directives", "app.tables", "app.map", "countTo", "mediaPlayer","ngDragDrop", "app.music"]).run(["$rootScope", "$location","loggit",
+var app = angular.module("app", ["ngRoute", "ngAnimate","ngResource","toastr", "app.config","ngStorage", "ui.bootstrap", "mgo-angular-wizard", "ui.tree", "ngMap", "ngTagsInput", "app.ui.ctrls", "app.ui.services", "app.controllers", "app.directives", "app.form.validation", "app.ui.form.ctrls", "app.ui.form.directives", "app.tables", "app.map", "countTo", "mediaPlayer","ngDragDrop", "app.music"]).run(["$rootScope", "$location","loggit",
     function ($rootScope, $location,loggit) {
 
         $(document).ready(function(){
@@ -18,12 +18,17 @@ var app = angular.module("app", ["ngRoute", "ngAnimate","app.config", "ui.bootst
 
         });
 
-    }] ).config(["$routeProvider",
-    function($routeProvider) {
-        return $routeProvider.when("/", {
-            redirectTo: "/dashboard"
-        }).when("/dashboard", {
+    }])
+    .config(
+        ["$routeProvider",
+        function($routeProvider) {
+
+            return $routeProvider.when("/", {
+                redirectTo: "/dashboard"
+            }).when("/dashboard", {
                 templateUrl: "app/views/dashboards/dashboard.html"
+            }).when("/logout", {
+                templateUrl: "app/views/pages/logout.html"
             }).when("/dashboard/dashboard", {
                 templateUrl: "app/views/dashboards/dashboard.html"
             }).when("/ui/typography", {
@@ -103,8 +108,30 @@ var app = angular.module("app", ["ngRoute", "ngAnimate","app.config", "ui.bootst
             }).otherwise({
                 redirectTo: "/404"
             });
-    }
-]);
+        }
+        ]
+    )
+    .config(
+            function($routeProvider, $localStorageProvider, $httpProvider, toastrConfig) {
+
+                if ($localStorageProvider.get('token')) {
+                    $httpProvider.defaults.headers.common['Authentication'] = $localStorageProvider.get('token').access_token;
+                }
+
+               $httpProvider.interceptors.push(function ($q) {
+                    return {
+                        'responseError': function (responseError) {
+                            alert(responseError.statusText)
+                            if (responseError.status == 403 || responseError.status == 401) {
+                                location.hash = '#/pages/signin';
+                            }
+
+                        }
+                    };
+                });
+            }
+    )
+;
 
 
 /**************************

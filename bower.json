@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.3.20",
+    "angular": "1.2.15",
     "angular-animate": "~1.3.13",
     "angular-route": "~1.3.13",
     "underscore": "~1.8.1",
@@ -31,6 +31,8 @@
     "slimScroll": "~1.3.3",
     "dripicons": "~1.0.0",
     "angular-media-player": "~0.5.8",
-    "html5shiv": "~3.7.2"
+    "html5shiv": "~3.7.2",
+    "angular-toastr" : "*",
+    "ngstorage" : "0.3.*"
   }
 }

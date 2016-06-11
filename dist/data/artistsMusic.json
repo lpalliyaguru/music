@@ -346,5 +346,38 @@
         ]
       }
     ]
+  }, 
+ {
+    "url_name": "karunaratne_divulgane",
+    "name": "Karunaratne Divulgane",
+    "banner": "dist/images/artists/artistbanner1.jpg",
+    "image": "dist/images/artists/artist1.jpg",
+    "genre": [
+      "Rock",
+      "Folk"
+    ],
+    "about": "Great music inspired by early electronic sounds, combining the symphony of classical instruments and complete surrounding",
+    "albums": [
+		{
+        "album_name": "When tomorrow comes",
+        "album_image": "dist/images/albums/album6.jpg",
+        "album_release": "June 2000",
+        "songs": [
+          {
+            "image": "dist/images/songs/song20.jpg",
+            "url": "https://s3-ap-southeast-1.amazonaws.com/musiclocalmp3/divulgane/Asata+Asuwana+Maime.mp3",
+            "displayName": "Divulgane - General Album",
+            "type": "audio/mpeg"
+          },
+          {
+            "image": "dist/images/songs/song19.jpg",
+            "url": "https://s3-ap-southeast-1.amazonaws.com/musiclocalmp3/divulgane/Anjanam+Deviye.mp3",
+            "displayName": "Divulgane - General Album",
+            "type": "audio/mpeg"
+          }
+        ]
+      }
+	
+	]
   }
 ]

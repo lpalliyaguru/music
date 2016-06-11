@@ -82,5 +82,13 @@
     "image": "dist/images/artists/artist12.jpg",
     "genre": ["Rock","Heavy","Metal"],
     "about": "Great music inspired by early electronic sounds, combining the symphony of classical instruments and complete surrounding"
+  },
+  {
+    "url_name": "karunaratne_divulgane",
+    "name": "Karunaratne Divulagane",
+    "image": "dist/images/artists/artist12.jpg",
+    "genre": ["Classic"],
+    "about": "Classic sinhala song."
   }
+  
 ]

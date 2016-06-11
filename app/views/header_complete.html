@@ -14,7 +14,7 @@
 
     </li>
 </ul>
-<!--
+
 <ul class="nav-left pull-left list-unstyled list-notifications">
     <li class="dropdown list-notifications__item">
         <a href="javascript:;" class="dropdown-toggle bg-primary" data-toggle="dropdown" aria-expanded="false">
@@ -33,7 +33,7 @@
                                     </span>
 
                         <div class="media-body">
-                            <span class="block">Jane sent you a message</span>
+                            <span class="block">Jane sent you a message. Auth</span>
                             <span class="text-muted">3 hours ago</span>
                         </div>
                     </a>
@@ -108,57 +108,64 @@
             </div>
         </div>
     </li>
-</ul>-->
-
-    <!--<ul data-ng-controller="ActionsCtrl as actions" class="nav-button pull-right list-unstyled header-actions">
-        <li>
-          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-bell color-default"></i>
-          </a>
-
-          <div class="dropdown-menu pull-right with-arrow panel panel-default">
-            <div class="panel-heading">
-              You have 2 notifications.
-            </div>
-            <ul class="list-group">
-              <li class="list-group-item">
-                <a href="javascript:;" class="media">
-                                        <span class="pull-left media-icon">
-                                            <span class="circle-icon sm bg-info"><i class="fa fa-comment-o"></i></span>
-                                        </span>
-
-                  <div class="media-body">
-                    <span class="block">Jane sent you a message</span>
-                    <span class="text-muted">3 hours ago</span>
-                  </div>
-                </a>
-              </li>
-              <li class="list-group-item">
-                <a href="javascript:;" class="media">
-                                        <span class="pull-left media-icon">
-                                            <span class="circle-icon sm bg-danger"><i class="fa fa-comment-o"></i></span>
-                                        </span>
-
-                  <div class="media-body">
-                    <span class="block">Lynda sent you a mail</span>
-                    <span class="text-muted">9 hours ago</span>
-                  </div>
-                </a>
-              </li>
-            </ul>
-            <div class="panel-footer">
-              <a href="javascript:;">Show all messages.</a>
-            </div>
-          </div>
-        </li>
-      <li>
-        <a href="javascript:;" data-ng-click="actions.toggleChat()" tooltip-placement="left" tooltip="Toggle chat" tooltip-append-to-body="true">
-          <i class="fa fa-comments-o color-default"></i>
+    <!--<li class="list-notifications__item">
+        <a href="#/tasks" class="">
+            <i class="icon-checkmark color-white"></i>
         </a>
-      </li>
-    </ul>-->
+    </li>-->
+</ul>
 
-<!--<ul class="nav-button pull-right list-unstyled" >
+
+
+<ul data-ng-controller="ActionsCtrl as actions" class="nav-button pull-right list-unstyled header-actions">
+    <li>
+      <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-bell color-default"></i>
+      </a>
+
+      <div class="dropdown-menu pull-right with-arrow panel panel-default">
+        <div class="panel-heading">
+          You have 2 notifications.
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a href="javascript:;" class="media">
+                                    <span class="pull-left media-icon">
+                                        <span class="circle-icon sm bg-info"><i class="fa fa-comment-o"></i></span>
+                                    </span>
+
+              <div class="media-body">
+                <span class="block">Jane sent you a message</span>
+                <span class="text-muted">3 hours ago</span>
+              </div>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a href="javascript:;" class="media">
+                                    <span class="pull-left media-icon">
+                                        <span class="circle-icon sm bg-danger"><i class="fa fa-comment-o"></i></span>
+                                    </span>
+
+              <div class="media-body">
+                <span class="block">Lynda sent you a mail</span>
+                <span class="text-muted">9 hours ago</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <div class="panel-footer">
+          <a href="javascript:;">Show all messages.</a>
+        </div>
+      </div>
+    </li>
+  <li>
+    <a href="javascript:;" data-ng-click="actions.toggleChat()" tooltip-placement="left" tooltip="Toggle chat" tooltip-append-to-body="true">
+      <i class="fa fa-comments-o color-default"></i>
+    </a>
+  </li>
+</ul>
+
+<ul class="nav-button pull-right list-unstyled" >
 
     <li class="dropdown text-small nav-profile">
         <a href="javascript:;" class="dropdown-toggle text-muted" data-toggle="dropdown" aria-expanded="false">
@@ -179,7 +186,7 @@
               </a>
             </li>
             <li class="list-group-item">
-              <a href="#/pages/signin" class="media">
+              <a href="/#/logout"  class="media">
                 <span class="block"><i class="fa fa-sign-out color-secondary"></i>Sign out</span>
               </a>
             </li>
@@ -193,7 +200,7 @@
             <a href="javascript:;">Show all notifications.</a>
           </div>
 
-            &lt;!&ndash;<ul class="list-group">
+            <!--<ul class="list-group">
 
                 <li class="list-group-item">
                     <a href="#/tasks">
@@ -213,18 +220,12 @@
                         <span>Log out</span>
                     </a>
                 </li>
-            </ul>&ndash;&gt;
+            </ul>-->
         </div>
     </li>
 
-</ul>-->
-    <ul data-ng-controller="ActionsCtrl as actions" class="nav-button pull-right list-unstyled header-actions">
-        <li>
-            <a href="/#/pages/signin" class="dropdown-toggle signin-link" data-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell color-default"></i> Sign in
-            </a>
-        </li>
-    </ul>
+</ul>
+
 </div>
 
 </header>

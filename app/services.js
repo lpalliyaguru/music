@@ -30,36 +30,23 @@ angular.module("app.ui.services", []).factory("loggit", [
             }
         };
     }
-]).factory("ArtistListingSrv",
-  function($http) {
+  ])
+    .factory("ArtistListingSrv", function($http) {
+         //Gets artists list with image url and name from the Server
+        var ArtistListingObj = {},
+        artists = [];
+         //Get data from the .json files (Replace by your own webserver)
+        ArtistListingObj.getArtists = function(callback){
+            $http.get(apiUrl + '/api/artists').success(function(data) {
+                artists = data;
+                ArtistListingObj.artists = artists;
+                callback(data);
 
-    /**************************
-     Gets artists list with image url and name from the Server
-     **************************/
-
-    var ArtistListingObj = {},
-      artists = [];
-
-    /**************************
-     Get data from the .json files (Replace by your own webserver)
-     **************************/
-
-    ArtistListingObj.getArtists = function(callback){
-
-      $http.get('dist/data/artists.json').success(function(data) {
-
-        artists = data;
-
-        ArtistListingObj.artists = artists;
-        callback(data);
-
-      });
-
-    };
-
-    return ArtistListingObj;
-
-  }).factory("AlbumsListingSrv",
+            });
+        };
+        return ArtistListingObj;
+    })
+    .factory("AlbumsListingSrv",
   function($http) {
 
     /**************************
@@ -164,53 +151,67 @@ angular.module("app.ui.services", []).factory("loggit", [
     return PlayListObj;
 
   })
-  .factory("ArtistSrv",
-  function($http) {
+    .factory("ArtistSrv", function($http) {
+        //Gets artists with all songs from the "Server"
+        var self = {},
+        artists = [];
+        //Get data from the .json files (Replace by your own webserver)
 
-    /**************************
-     Gets artists with all songs from the "Server"
-     **************************/
+        self.getSongs = function(callback){
+            $http.get('dist/data/artistsMusic.json').success(function(data) {
+                artists = data;
+                PlayListObj.artists = artists;
+                callback(data);
+            });
+        };
 
-    var PlayListObj = {},
-      artists = [];
+        self.getArtist = function(title,callback) {
+            $http.get(apiUrl + '/api/artists/' + title).success(function(data) {
+                callback(data);
+            })
+        };
 
-    /**************************
-     Get data from the .json files (Replace by your own webserver)
-     **************************/
+        self.followArtist = function(Artist, successCallBack, failCallBack){
+            $http.get(apiUrl + '/api/artists/' + Artist.artist_id + '/follow').success(function(data) {
+                successCallBack(data);
+            }).error(function(){
+                failCallBack(data);
+            });
+        };
+        self.unfollowArtist = function(Artist, successCallBack, failCallBack){
+            $http.get(apiUrl + '/api/artists/' + Artist.artist_id + '/unfollow').success(function(data) {
+                successCallBack(data);
+            }).error(function(){
+                failCallBack(data);
+            });
+        };
 
-    PlayListObj.getSongs = function(callback){
+        self.getFollowers = function(artistId, successCallBack, failCallBack){
+            $http.get(apiUrl + '/api/artists/' + artistId + '/get-followers').success(function(data) {
+                successCallBack(data);
+            }).error(function(){
+                failCallBack(data);
+            });
+        }
+        return self;
+    })
+    .service(
+        "SongSrv",
+        ["$http",
+        function ($http) {
+            var self = {
+                updatePlayedSong : function (track, callback) {
+                    console.log('sending ', apiUrl + '/api/songs/' + track.id + '/played');
+                    $http.get(apiUrl + '/api/songs/' + track.id + '/played').success(function(data){
+                        callback(data);
+                    });
+                }
+            }
+            return self;
 
-      $http.get('dist/data/artistsMusic.json').success(function(data) {
-
-        artists = data;
-
-        PlayListObj.artists = artists;
-        callback(data);
-
-      });
-
-    };
-
-    PlayListObj.getArtist = function(title,callback) {
-
-      PlayListObj.getSongs(function(data){
-
-        _.map(PlayListObj.artists, function(artistSongs){
-
-          if(artistSongs.url_name == title){
-            return callback(artistSongs);
-          }
-        });
-
-      });
-
-    };
-
-    return PlayListObj;
-
-  })
-  .factory("PlayListSrv",
-  function() {
+    }])
+    .factory("PlayListSrv",
+        function() {
 
     /**************************
      Saves and loads Playlists from the localStorage
@@ -359,63 +360,145 @@ angular.module("app.ui.services", []).factory("loggit", [
     return MENU_STATES;
 
 
-  }).factory("CreatePlaylistSrv",['$modal','$log','PlayListSrv','$location',function($modal,$log,PlayListSrv,$location) {
+  }).
+    factory("CreatePlaylistSrv",['$modal','$log','PlayListSrv','$location',function($modal,$log,PlayListSrv,$location) {
 
     /**************************
      Provides a way to create a new playlist
      **************************/
 
-    var CreatePlayListSrvObj = {};
+        var CreatePlayListSrvObj = {};
 
-    CreatePlayListSrvObj.openCreateModal = function(song){
+        CreatePlayListSrvObj.openCreateModal = function(song){
 
-     var modalInstance = $modal.open({
-       templateUrl: 'app/views/forms/create_playlist.html',
-       controller: 'CreatePlaylistInstanceCtrl',
-       resolve: {
-         playlistName: function () {
-           return '';
-         },
-         song: function () {
-           return song;
-         }
-       }
-     });
+            var modalInstance = $modal.open({
+                templateUrl: 'app/views/forms/create_playlist.html',
+                controller: 'CreatePlaylistInstanceCtrl',
+                resolve: {
+                    playlistName: function () {
+                        return '';
+                    },
+                    song: function () {
+                        return song;
+                    }
+                }
+            });
 
-     modalInstance.result.then(function (response) {
+            modalInstance.result.then(function (response) {
 
-       var songs = [],
-         playlistName;
+                var songs = [],
+                playlistName;
 
-       if(typeof response.song != "undefined"){
-         songs.push(response.song);
-       }
+                if(typeof response.song != "undefined"){
+                    songs.push(response.song);
+                }
+                playlistName = response.playlistName;
 
-       playlistName = response.playlistName;
+           //Callback for a Okay on Save new playlist
+                var url_name = playlistName.toLowerCase().replace(" ","-"),
+                new_playlist = {
+                    url_name: url_name,
+                    name: playlistName,
+                    banner: 'dist/images/playlists/playlistbanner.jpg',
+                    image: 'dist/images/songs/song17.jpg',
+                    genre: [],
+                    songs: songs
+                };
 
-       //Callback for a Okay on Save new playlist
-       var url_name = playlistName.toLowerCase().replace(" ","-"),
-       new_playlist = {
-         url_name: url_name,
-         name: playlistName,
-         banner: 'dist/images/playlists/playlistbanner.jpg',
-         image: 'dist/images/songs/song17.jpg',
-         genre: [],
-         songs: songs
-       };
+                PlayListSrv.put(new_playlist,function(response){
 
-       PlayListSrv.put(new_playlist,function(response){
+                    window.location = "#/playlist/" + url_name;
+                });
 
-         window.location = "#/playlist/" + url_name;
-       });
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
 
-     }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
-     });
+        };
 
-     };
+        return CreatePlayListSrvObj;
+    }])
+    .service(
+        'UserService',
+        ["$q", "User", "$http", "toastr",
+        function($q, User, $http, toastr){
 
-    return CreatePlayListSrvObj;
+        var self = {
+            get : function(id){
+                return User.get({
+                    "id" : id
+                });
+            },
+            register: function($scope){
+                console.log('userservice.register', apiUrl);
+                $http
+                    .post(apiUrl + '/api/register', $scope.user)
+                    .success(function(data){
+                        if(data.success) {
+                            toastr.success('Registered!');
+                           //$state.go('login');
+                        }
+                        else {
+                            toastr.error('Register Error! Please fill the form correctly');
+                        }
+
+                        $scope.registering = false
+                    })
+                    .error(function(){
+                        toastr.error('Register Error!');
+                        $scope.registering = false
+                    });
+                ;
+            },
+            login : function($scope) {
+
+                $http
+                    .post(apiUrl + '/api/login',{username: $scope.username, password: $scope.password})
+                    .success(function (data) {
+                        if(data.success) {
+                            $scope.$storage.token = data.access_token;
+                            $scope.$storage.user  = data.user;
+                            $http.defaults.headers.common['Authentication'] = $scope.$storage.token.access_token;
+                            toastr.success('Logged in!');
+                        }
+                        else {
+                            toastr.error('Login Failed!');
+                        }
 
 
-  }]);
+                        //$state.go('home');
+                        $scope.logging = false;
+                    })
+                    .error(function (error) {
+                        $scope.logging = false;
+                    })
+                ;
+            },
+            save: function($scope){
+                return User.update({id: $scope.user.id}, $scope.user, function (d) {
+                    $scope.updating = false;
+                    toastr.success('Profile info updated');
+                }, function() {
+                    $scope.updating = false;
+                    toastr.error('Something went wrong. Please try again');
+                });
+            },
+    }
+    return self;
+    }])
+    .factory(
+        'User',
+        ["$resource",
+        function($resource) {
+        return $resource(apiUrl + '/api/user/:id/:action',
+            {
+                id: '@id'
+            },
+            {
+                'update': {
+                    method: 'PUT'
+                }
+            }
+        );
+    }])
+;

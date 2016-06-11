@@ -4,52 +4,91 @@
  */
 
 angular.module("app.controllers", [])
-  .controller("AdminAppCtrl", ["$scope", "$location",
-    function ($scope, $location) {
-      $scope.checkIfOwnPage = function () {
+    .controller(
+        "AdminAppCtrl",
+        ["$scope", "$location", "$localStorage", "SongSrv",
+        function ($scope, $location, $localStorage, SongSrv) {
+            this.songUpdated = false;
+            this.trackCurrentTime = 0;
 
-        return _.contains(["/front", "/404", "/pages/500", "/pages/login", "/pages/signin", "/pages/signin1", "/pages/signin2", "/pages/signup", "/pages/signup1", "/pages/signup2", "/pages/forgot", "/pages/lock-screen"], $location.path());
+            if($scope.mediaPlayer) {
 
-      };
+                $scope.mediaPlayer.on('timeupdate', function(event){
+                    //console.log(event);
+                    this.trackCurrentTime = parseInt(event.currentTarget.currentTime);
 
-      $scope.checkIfFixedPage = function () {
+                    if(!this.songUpdated &&  this.trackCurrentTime > 20) {
 
-        return _.contains(["/dashboard"], $location.path());
+                        SongSrv.updatePlayedSong($scope.generalPlaylist.audioPlaylist[$scope.mediaPlayer.currentTrack -1], function(){
+                            //update local data
+                        });
+                        this.songUpdated = true;
+                    }
+                });
 
-      };
+                $scope.mediaPlayer.on('ended', function () {
+                    console.log('Track Ended');
+                    this.songUpdated = false;
+                });
 
-      $scope.info = {
-        theme_name: "Kimono",
-        user_name: "Jane Doe"
-      };
+                $scope.mediaPlayer.on('loadedmetadata', function () {
+                    console.log('Track loadedmetadata');
+                    this.songUpdated = false;
+                });
+            }
 
-    }
-  ])
-  .controller("NavCtrl", ['navigationMenuService',
-    function (navigationMenuService) {
+            $scope.checkIfOwnPage = function () {
 
-      this.navigationState = navigationMenuService;
+            return _.contains(["/front", "/404", "/pages/500", "/pages/login", "/pages/signin", "/pages/signin1", "/pages/signin2", "/pages/signup", "/pages/signup1", "/pages/signup2", "/pages/forgot", "/pages/lock-screen"], $location.path());
+            };
 
-      this.SwitchToMenu = function () {
-        navigationMenuService.menu = true;
-        navigationMenuService.playlist = false;
-      };
+            $scope.checkIfFixedPage = function () {
+                return _.contains(["/dashboard"], $location.path());
+            };
+            $scope.$storage = $localStorage;
+            $scope.info = {
+                theme_name: "Kimono",
+                user_name: "Jane Doe"
+            };
+        }]
+    )
+    .controller("NavCtrl",
+        ["$scope", 'navigationMenuService', "$localStorage",
+        function ($scope, navigationMenuService, $localStorage) {
 
-      this.SwitchToPlaylist = function () {
-        navigationMenuService.menu = false;
-        navigationMenuService.playlist = true;
-      };
+            this.navigationState = navigationMenuService;
+            $scope.user = $localStorage.user;
+            this.SwitchToMenu = function () {
+                navigationMenuService.menu = true;
+                navigationMenuService.playlist = false;
+            };
 
-    }
-  ])
-  .controller("ActionsCtrl", ['$scope', function ($scope) {
+            this.SwitchToPlaylist = function () {
+                navigationMenuService.menu = false;
+                navigationMenuService.playlist = true;
+            };
 
-    this.toggleChat = function () {
-      $('.chat-bar').toggleClass("visible");
-    };
+        }
+    ])
+    .controller(
+        "ActionsCtrl",
+        ['$scope', '$localStorage',
+        function ($scope) {
 
-  }
-  ]);
+        this.toggleChat = function () {
+            $('.chat-bar').toggleClass("visible");
+        };
+
+        $scope.logout = function($localStorage) {
+            console.log('logging out');
+            $localStorage.$reset();
+            delete $scope.$storage;
+            console.log($localStorage.user);
+            window.location.hash('/');
+        }
+    }])
+
+;
 
 /*
  App Form validations
@@ -636,83 +675,111 @@ angular.module("app.ui.ctrls", []).controller("NotifyCtrl", ["$scope", "loggit",
  Provides general controllers for the app
  */
 
-angular.module('app.music', ['mediaPlayer', 'ngDragDrop'])
-  .controller('PlayListCtrl', ['$scope', 'PlayListSrv', 'CreatePlaylistSrv',
-    function ($scope, PlayListSrv, CreatePlaylistSrv) {
-      this.audioPlaylist = [];
-      var CreateNewPlaylistSrv = CreatePlaylistSrv;
+angular
+    .module('app.music', ['mediaPlayer', 'ngDragDrop'])
+    .controller(
+        'PlayListCtrl',
+        ['$scope', 'PlayListSrv', 'CreatePlaylistSrv',
+        function ($scope, PlayListSrv, CreatePlaylistSrv) {
+            this.audioPlaylist = [];
+            var CreateNewPlaylistSrv = CreatePlaylistSrv;
 
-      this.userPlaylists = PlayListSrv.playlists;
+            this.userPlaylists = PlayListSrv.playlists;
 
-      this.addSong = function (audioElement) {
-        this.audioPlaylist.push(angular.copy(audioElement));
-      };
+            this.addSong = function (audioElement, artist) {
 
-      this.removeSong = function (index) {
-        this.audioPlaylist.splice(index, 1);
-      };
+                audioElement.artist = artist;
+                this.audioPlaylist.push(angular.copy(audioElement));
+            };
 
-      this.dropSong = function (audioElement, index) {
-        this.audioPlaylist.splice(index, 0, angular.copy(audioElement));
-      };
+            $scope.bindFunc = function(){
+                console.log($scope.mediaPlayer);
+            }
 
-      this.getSongImage = function (currentTrack) {
-        if (typeof this.audioPlaylist[currentTrack - 1] != "undefined") {
-          return this.audioPlaylist[currentTrack - 1].image;
+            this.removeSong = function (index) {
+                this.audioPlaylist.splice(index, 1);
+            };
+
+            this.dropSong = function (audioElement, index) {
+                this.audioPlaylist.splice(index, 0, angular.copy(audioElement));
+            };
+
+            this.getSongImage = function (currentTrack) {
+                if (typeof this.audioPlaylist[currentTrack - 1] != "undefined") {
+                  return this.audioPlaylist[currentTrack - 1].image;
+                }
+            };
+
+            this.getSongArtist = function (currentTrack) {
+                if (typeof this.audioPlaylist[currentTrack - 1] != "undefined") {
+                  return this.audioPlaylist[currentTrack - 1].artist;
+                }
+            };
+
+            this.getSongName = function (currentTrack) {
+                if (typeof this.audioPlaylist[currentTrack - 1] != "undefined") {
+                  return this.audioPlaylist[currentTrack - 1].title;
+                }
+            };
+
+            this.seekPercentage = function ($event) {
+                var percentage = ($event.offsetX / $event.target.offsetWidth);
+                if (percentage <= 1) {
+                  return percentage;
+                } else {
+                  return 0;
+                }
+            };
+            $scope.bindFunc();
+            this.createNewPlaylist = function (song) {
+
+                CreateNewPlaylistSrv.openCreateModal(song);
+
+            };
+    }])
+    .controller('ArtistListingCtrl',
+        ['$scope', 'ArtistListingSrv',
+        function ($scope, ArtistListingSrv) {
+            $scope.ArtistsSrv = ArtistListingSrv;
+
+            ArtistListingSrv.getArtists(function (data) {
+                //$scope.artists = data;
+              // no need to read data because its binded to $scope.AlbumsSrv
+              // You can however process something only after the data comes back
+            });
+
+      }])
+    .controller(
+    "RegisterCtrl",
+    ["$scope", "UserService","$localStorage",
+    function($scope, UserService, $localStorage){
+        $scope.user = {};
+        $scope.registering = false;
+        $scope.$storage = $localStorage;
+
+        $scope.register = function() {
+            $scope.registering = true;
+            UserService.register($scope);
         }
-      };
-
-      this.getSongArtist = function (currentTrack) {
-        if (typeof this.audioPlaylist[currentTrack - 1] != "undefined") {
-          return this.audioPlaylist[currentTrack - 1].artist;
+        $scope.login = function (){
+            $scope.logging = true;
+            UserService.login($scope);
         }
-      };
-
-      this.getSongName = function (currentTrack) {
-        if (typeof this.audioPlaylist[currentTrack - 1] != "undefined") {
-          return this.audioPlaylist[currentTrack - 1].title;
-        }
-      };
-
-      this.seekPercentage = function ($event) {
-        var percentage = ($event.offsetX / $event.target.offsetWidth);
-        if (percentage <= 1) {
-          return percentage;
-        } else {
-          return 0;
-        }
-      };
-
-      this.createNewPlaylist = function (song) {
-
-        CreateNewPlaylistSrv.openCreateModal(song);
-
-      };
-
-    }]).controller('ArtistListingCtrl', ['$scope', 'ArtistListingSrv',
-      function ($scope, ArtistListingSrv) {
-
-        $scope.ArtistsSrv = ArtistListingSrv;
-
-        ArtistListingSrv.getArtists(function (data) {
-          // no need to read data because its binded to $scope.AlbumsSrv
-          // You can however process something only after the data comes back
-        });
-
-      }]).controller('AlbumsCtrl', ['$scope', 'AlbumsListingSrv',
+    }])
+    .controller('AlbumsCtrl',
+        ['$scope', 'AlbumsListingSrv',
         function ($scope, AlbumsListingSrv) {
-
           $scope.AlbumsSrv = AlbumsListingSrv;
-
           AlbumsListingSrv.getAlbums(function (data) {
             // no need to read data because its binded to $scope.AlbumsSrv
             // You can however process something only after the data comes back
           });
 
 
-        }]).controller('GenresCtrl', ['$scope', 'GenresListingSrv',
-          function ($scope, GenresListingSrv) {
-
+    }])
+    .controller('GenresCtrl',
+        ['$scope', 'GenresListingSrv',
+        function ($scope, GenresListingSrv) {
             $scope.GenresSrv = GenresListingSrv;
 
             GenresListingSrv.getGenres(function (data) {
@@ -721,192 +788,169 @@ angular.module('app.music', ['mediaPlayer', 'ngDragDrop'])
             });
 
 
-          }])
-  .controller('AlbumCtrl', ['$scope', '$routeParams', 'AlbumSrv', 'PlayListSrv', 'navigationMenuService', 'loggit',
-    function ($scope, $routeParams, AlbumSrv, PlayListSrv, navigationMenuService, loggit) {
-
-      this.AlbumSrv = AlbumSrv;
-      var albumPlaylistVar = [];
-
-      this.following = "Follow album";
-      this.following_class = "btn-default";
-
-      this.follow = function () {
-
-        this.following = "Following";
-        this.following_class = "btn-primary";
-
-        loggit.logSuccess('Yaay!! You are now following this album');
-
-      };
-
-      AlbumSrv.getAlbum($routeParams.title, function (response) {
-
-        if (typeof response.songs != "undefined") {
-
-          _.map(response.songs, function (song) {
-
-            /*Put them all together in one single list (for adding to new playlists for example)*/
-
-            var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
-
-            albumPlaylistVar.push({
-              image: song.image,
-              src: song.url,
-              url: song.url,
-              type: song.type,
-              artist: parseTitle[1],
-              title: parseTitle[2],
-              displayName: song.displayName
-            });
-          });
-
-          $scope.albumName = response.name;
-          $scope.albumImage = response.image;
-          $scope.albumBanner = response.banner;
-          $scope.albumGenre = response.genre;
-          $scope.albumAbout = response.about;
-        }
-
-      });
-
-      $scope.albumPlaylistVar = albumPlaylistVar;
-
-      this.addSongs = function (playlist, callback) {
-
-        _.each(albumPlaylistVar, function (audioElement) {
-          playlist.push(angular.copy(audioElement));
-
-          if ((albumPlaylistVar.indexOf(audioElement) + 1) == albumPlaylistVar.length) {
-            // Callback goes here
-            if (callback) {
-              callback();
-            }
-          }
-
-        });
-
-        navigationMenuService.menu = false;
-        navigationMenuService.playlist = true;
-
-      };
-
-      this.addSongsAndPlay = function (playlist, mediaPlayer) {
-
-        this.addSongs(playlist, function () {
-
-          setTimeout(function () {
-            mediaPlayer.play();
-          }, 1000);
-
-        });
-
-      };
-
-      this.addSongToPlaylist = function (song, playlist) {
-
-        PlayListSrv.addSongToPlaylist(song, playlist);
-      };
-
-      this.toggleAlbumsList = function () {
-        this.AlbumList = true;
-        this.FullList = false;
-      };
-
     }])
-  .controller('ArtistCtrl', ['$scope', '$routeParams', 'ArtistSrv', 'PlayListSrv', 'navigationMenuService', 'loggit',
-    function ($scope, $routeParams, ArtistSrv, PlayListSrv, navigationMenuService, loggit) {
+    .controller('AlbumCtrl',
+        ['$scope', '$routeParams', 'AlbumSrv', 'PlayListSrv', 'navigationMenuService', 'loggit',
+        function ($scope, $routeParams, AlbumSrv, PlayListSrv, navigationMenuService, loggit) {
 
-      this.ArtistSrv = ArtistSrv;
-      var artistPlaylistVar = [],
-        artistPlaylistAlbums = [];
+            this.AlbumSrv = AlbumSrv;
+            var albumPlaylistVar = [];
 
+            this.following = "Follow album";
+            this.following_class = "btn-default";
 
-      this.AlbumList = true;
-      this.FullList = false;
-      this.following = "Follow artist";
-      this.following_class = "btn-default";
+            this.follow = function () {
+                this.following = "Following";
+                this.following_class = "btn-primary";
+                loggit.logSuccess('Yaay!! You are now following this album');
+            };
 
-      this.follow = function () {
+            AlbumSrv.getAlbum($routeParams.title, function (response) {
+                if (typeof response.songs != "undefined") {
+                    _.map(response.songs, function (song) {
+                        /*Put them all together in one single list (for adding to new playlists for example)*/
+                        var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
+                        albumPlaylistVar.push({
+                          image: song.image,
+                          src: song.url,
+                          url: song.url,
+                          type: song.type,
+                          artist: parseTitle[1],
+                          title: parseTitle[2],
+                          displayName: song.displayName
+                        });
+                    });
 
-        this.following = "Following";
-        this.following_class = "btn-primary";
+                    $scope.albumName = response.name;
+                    $scope.albumImage = response.image;
+                    $scope.albumBanner = response.banner;
+                    $scope.albumGenre = response.genre;
+                    $scope.albumAbout = response.about;
+                }
 
-        loggit.logSuccess('Yaay!! You are now following this artist');
-
-      };
-
-      ArtistSrv.getArtist($routeParams.title, function (response) {
-
-        if (typeof response.albums != "undefined") {
-
-          _.map(response.albums, function (album) {
-
-            artistPlaylistAlbums.push({
-              album_name: album.album_name,
-              album_image: album.album_image,
-              album_release: album.album_release,
-              songs: []
             });
 
-            _.map(album.songs, function (song) {
-
-              /*Put them all together in one single list (for adding to new playlists for example)*/
-
-              var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
-
-              artistPlaylistVar.push({
-                image: song.image,
-                src: song.url,
-                url: song.url,
-                type: song.type,
-                artist: parseTitle[1],
-                title: parseTitle[2],
-                displayName: song.displayName
-              });
-
-              /*Put songs also in this artist ordered by album*/
-
-              artistPlaylistAlbums[artistPlaylistAlbums.length - 1].songs.push({
-                image: song.image,
-                src: song.url,
-                url: song.url,
-                type: song.type,
-                artist: parseTitle[1],
-                title: parseTitle[2],
-                displayName: song.displayName
-              });
+            $scope.albumPlaylistVar = albumPlaylistVar;
+            this.addSongs = function (playlist, callback) {
+            _.each(albumPlaylistVar, function (audioElement) {
+                playlist.push(angular.copy(audioElement));
+                if ((albumPlaylistVar.indexOf(audioElement) + 1) == albumPlaylistVar.length) {
+                    // Callback goes here
+                    if (callback) {
+                      callback();
+                    }
+                }
             });
 
-          });
+            navigationMenuService.menu = false;
+            navigationMenuService.playlist = true;
 
-          $scope.artistName = response.name;
-          $scope.artistImage = response.image;
-          $scope.artistBanner = response.banner;
-          $scope.artistGenre = response.genre;
-          $scope.artistAbout = response.about;
+            };
 
-        }
+            this.addSongsAndPlay = function (playlist, mediaPlayer) {
 
-      });
+                this.addSongs(playlist, function () {
+                    setTimeout(function () {
+                        mediaPlayer.play();
+                    }, 1000);
+                });
+            };
 
-      $scope.artistPlaylist = artistPlaylistVar;
-      $scope.artistPlaylistAlbums = artistPlaylistAlbums;
+            this.addSongToPlaylist = function (song, playlist) {
 
+                PlayListSrv.addSongToPlaylist(song, playlist);
+            };
 
-      this.addSongs = function (playlist, callback) {
+            this.toggleAlbumsList = function () {
+                this.AlbumList = true;
+                this.FullList = false;
+            };
+    }])
+    .controller('ArtistCtrl',
+        ['$scope', '$routeParams', 'ArtistSrv', 'PlayListSrv', 'navigationMenuService', 'loggit', "$localStorage",
+        function ($scope, $routeParams, ArtistSrv, PlayListSrv, navigationMenuService, loggit, $localStorage) {
+            this.ArtistSrv = ArtistSrv;
+            var artistPlaylistVar = [],
+            artistPlaylistAlbums = [];
 
-        _.each(artistPlaylistVar, function (audioElement) {
-          playlist.push(angular.copy(audioElement));
+            this.AlbumList = true;
+            this.artistObject = null;
+            this.FullList = false;
+            $scope.followers = [];
+            $scope.isFollowing = false;
+            var that = this;
+            this.follow = function () {
+                this.ArtistSrv.followArtist(this.artistObject, function(response){
+                    $scope.followers.unshift($localStorage.user);
+                    $scope.isFollowing = true;
+                    loggit.logSuccess(response.message);
+                }, function(){
+                    loggit.logSuccess(response.message);
+                });
+            };
 
-          if ((artistPlaylistVar.indexOf(audioElement) + 1) == artistPlaylistVar.length) {
-            // Callback goes here
-            if (callback) {
-              callback();
-            }
-          }
+            this.unfollow = function () {
 
-        });
+                this.ArtistSrv.unfollowArtist(this.artistObject, function(response){
+                    for(i in $scope.followers) {
+                        for(f in  $scope.followers) {
+                            if($scope.followers[i].id == $localStorage.user.id) {
+                                $scope.followers.splice(i, 1);
+                            }
+                        }
+                    }
+                    $scope.isFollowing = false;
+                    loggit.logSuccess(response.message);
+                }, function(){
+                    loggit.logSuccess(response.message);s
+                });
+            };
+
+            ArtistSrv.getArtist($routeParams.title, function (response) {
+                if (typeof response.albums != "undefined") {
+                    _.map(response.albums, function (album) {
+                        artistPlaylistAlbums.push(album);
+                    });
+                    artistPlaylistVar = response.songs
+                    that.artistObject = response;
+
+                }
+
+                $scope.artistName = response.name;
+                $scope.artistImage = response.image;
+                $scope.artistBanner = response.banner;
+                $scope.artistGenre = response.genre;
+                $scope.artistAbout = response.about;
+                $scope.artistPlaylist = artistPlaylistVar;
+
+            });
+
+            ArtistSrv.getFollowers($routeParams.title, function(followers){
+                $scope.followers = followers;
+
+                if($localStorage.user) {
+                    for(f in  $scope.followers) {
+                        if($scope.followers[f].id == $localStorage.user.id) {
+                            $scope.isFollowing = true;
+                        }
+                    }
+                }
+
+            });
+
+            $scope.artistPlaylistAlbums = artistPlaylistAlbums;
+
+            this.addSongs = function (playlist, callback) {
+
+                _.each(artistPlaylistVar, function (audioElement) {
+                    playlist.push(angular.copy(audioElement));
+                    if ((artistPlaylistVar.indexOf(audioElement) + 1) == artistPlaylistVar.length) {
+                    // Callback goes here
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                });
 
         navigationMenuService.menu = false;
         navigationMenuService.playlist = true;
@@ -942,63 +986,62 @@ angular.module('app.music', ['mediaPlayer', 'ngDragDrop'])
 
 
     }])
-  .controller('UserPlayListCtrl', ['$routeParams', 'PlayListSrv', 'navigationMenuService',
-    function ($routeParams, PlayListSrv, navigationMenuService) {
+    .controller(
+        'UserPlayListCtrl',
+        ['$routeParams', 'PlayListSrv', 'navigationMenuService',
+        function ($routeParams, PlayListSrv, navigationMenuService) {
 
-      this.PlayListSrv = PlayListSrv;
-      var UserPlaylistVar = [],
+        this.PlayListSrv = PlayListSrv;
+        var UserPlaylistVar = [],
         playlistTitle, playlistImage, playlistBanner, playlistGenre, playlistUrlName;
 
-      PlayListSrv.getPlaylist($routeParams.title, function (response) {
+        PlayListSrv.getPlaylist($routeParams.title, function (response) {
 
-        if (typeof response.songs != "undefined") {
+            if (typeof response.songs != "undefined") {
 
-          _.map(response.songs, function (song) {
-            var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
-            UserPlaylistVar.push({
-              image: song.image,
-              src: song.url,
-              url: song.url,
-              type: song.type,
-              artist: parseTitle[1],
-              title: parseTitle[2],
-              displayName: song.displayName
-            });
-          });
+                _.map(response.songs, function (song) {
+                    var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
+                    UserPlaylistVar.push({
+                        image: song.image,
+                        src: song.url,
+                        url: song.url,
+                        type: song.type,
+                        artist: parseTitle[1],
+                        title: parseTitle[2],
+                        displayName: song.displayName
+                    });
+              });
 
-          playlistTitle = response.name;
-          playlistImage = response.image;
-          playlistBanner = response.banner;
-          playlistGenre = response.genre;
-          playlistUrlName = response.url_name;
-        }
-
-      });
-
-      this.userPlaylist = UserPlaylistVar;
-      this.playlistName = playlistTitle;
-      this.playlistImage = playlistImage;
-      this.playlistBanner = playlistBanner;
-      this.playlistGenre = playlistGenre;
-      this.playlistUrlName = playlistUrlName;
-
-      this.addSongs = function (playlist, callback) {
-
-        _.each(UserPlaylistVar, function (audioElement) {
-          playlist.push(angular.copy(audioElement));
-
-          if ((UserPlaylistVar.indexOf(audioElement) + 1) == UserPlaylistVar.length) {
-            // Callback goes here
-            if (callback) {
-              callback();
+              playlistTitle = response.name;
+              playlistImage = response.image;
+              playlistBanner = response.banner;
+              playlistGenre = response.genre;
+              playlistUrlName = response.url_name;
             }
-          }
-
         });
 
-        navigationMenuService.menu = false;
-        navigationMenuService.playlist = true;
+        this.userPlaylist = UserPlaylistVar;
+        this.playlistName = playlistTitle;
+        this.playlistImage = playlistImage;
+        this.playlistBanner = playlistBanner;
+        this.playlistGenre = playlistGenre;
+        this.playlistUrlName = playlistUrlName;
 
+        this.addSongs = function (playlist, callback) {
+
+            _.each(UserPlaylistVar, function (audioElement) {
+                playlist.push(angular.copy(audioElement));
+
+                if ((UserPlaylistVar.indexOf(audioElement) + 1) == UserPlaylistVar.length) {
+            // Callback goes here
+                    if (callback) {
+                        callback();
+                    }
+                }
+            });
+
+            navigationMenuService.menu = false;
+            navigationMenuService.playlist = true;
       };
 
       this.addSongsAndPlay = function (playlist, mediaPlayer) {
@@ -1026,25 +1069,45 @@ angular.module('app.music', ['mediaPlayer', 'ngDragDrop'])
         this.userPlaylist = _.without(this.userPlaylist, song);
       };
 
-    }]).controller("CreatePlaylistInstanceCtrl", ["$scope", "$modalInstance", 'playlistName', 'song', 'loggit',
-      function ($scope, $modalInstance, playlistName, song, loggit) {
+    }])
+    .controller(
+        "CreatePlaylistInstanceCtrl",
+        ["$scope", "$modalInstance", 'playlistName', 'song', 'loggit',
+        function ($scope, $modalInstance, playlistName, song, loggit) {
 
-        $scope.playlistName = playlistName;
-        $scope.song = song;
+            $scope.playlistName = playlistName;
+            $scope.song = song;
 
-        $scope.ok = function () {
+            $scope.ok = function () {
 
-          if ($scope.playlistName !== "") {
-            $modalInstance.close($scope);
-          }
-          else {
-            $modalInstance.dismiss('cancel');
-            loggit.logError("Error! Could not create a playlist with no name..");
-          }
-        };
+                if ($scope.playlistName !== "") {
+                    $modalInstance.close($scope);
+                }
+                else {
+                    $modalInstance.dismiss('cancel');
+                    loggit.logError("Error! Could not create a playlist with no name..");
+                }
+            };
 
-        $scope.cancel = function () {
-          $modalInstance.dismiss('cancel');
-        };
-      }
-    ]);
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+    ])
+    .controller(
+    "LogoutCtrl",
+    ['$scope', "$localStorage",
+    function ($scope, $localStorage) {
+
+            $scope.logout = function($localStorage) {
+                console.log('logging out');
+                $localStorage.$reset();
+                delete $scope.$storage;
+                console.log($localStorage.user);
+                window.location.hash = '/';
+            }
+            $scope.logout($localStorage);
+        }]
+    )
+
+;
