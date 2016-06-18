@@ -9,19 +9,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,700,600,400'
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,700,600,400'
         rel='stylesheet' type='text/css'>
 
   <!-- Include Jquery in the vendor folder -->
   <script src="dist/js/jquery.min.js"></script>
 
   <!-- Theme's own CSS file -->
-    <link rel="stylesheet" href="dist/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="dist/css/font-awesome.min.css">-->
+  <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.min.css">
     <link rel="stylesheet" href="dist/css/main.css">
-    <link rel="stylesheet" href="dist/css/app.css">
 </head>
 <noscript>
   <META HTTP-EQUIV="Refresh" CONTENT="0;URL=no-js.html">
@@ -32,13 +32,13 @@
 
   <audio media-player="mediaPlayer" playlist="generalPlaylist.audioPlaylist"></audio>
   <div data-ng-hide="checkIfOwnPage()" data-ng-cloak="" class="no-print">
-    <aside data-ng-include=" 'app/views/navigation.html' " id="nav-container"></aside>
+    <aside data-ng-include=" 'views/navigation.html' " id="nav-container"></aside>
   </div>
 
   <div class="view-container">
 
     <div data-ng-hide="checkIfOwnPage()" data-ng-cloak="" class="no-print">
-      <section data-ng-include=" $storage.user ? 'app/views/header_complete.html' : 'app/views/header.html'" id="header" class="top-header"></section>
+      <section data-ng-include=" $storage.user ? 'views/header_complete.html' : 'views/header.html'" id="header" class="top-header"></section>
     </div>
     <section data-ng-view="" id="content" class="animate-fade-up" ng-class="{fixed:checkIfFixedPage()}"></section>
   </div>
@@ -112,10 +112,10 @@
   </div>
 </div>
 
-<!--Uncomment for deployment using Grunt
-<script type="text/javascript" src="dist/js/app.js"></script>-->
+<!--Uncomment for deployment using Grunt-->
+<script type="text/javascript" src="dist/js/app.js"></script>
 
-<!--Uncomment for deployment without Grunt-->
+<!--Uncomment for deployment without Grunt
 
 <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/gmap.js"></script>
@@ -141,9 +141,17 @@
 <script type="text/javascript" src="app/controllers.js"></script>
 <script type="text/javascript" src="app/directives.js"></script>
 <script type="text/javascript" src="app/factory.js"></script>
-<script type="text/javascript" src="app/services.js"></script>
+<script type="text/javascript" src="app/services.js"></script>-->
 <script>
-    var apiUrl = "http://api.music.local";
+  var urlMap = {
+    'music.local' : 'http://api.music.local',
+    'music.hurry.sg' : 'http://api.music.hurry.sg'
+  }
+  var hostName = window.location.host;
+
+  var apiUrl = urlMap[hostName];
+  console.log(apiUrl);
+
 
 </script>
 </body>

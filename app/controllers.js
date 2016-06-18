@@ -6,19 +6,17 @@
 angular.module("app.controllers", [])
     .controller(
         "AdminAppCtrl",
-        ["$scope", "$location", "$localStorage", "SongSrv",
-        function ($scope, $location, $localStorage, SongSrv) {
+        ["$scope", "$location", "$localStorage", "SongSrv","PlayListSrv",
+        function ($scope, $location, $localStorage, SongSrv, PlayListSrv) {
             this.songUpdated = false;
             this.trackCurrentTime = 0;
 
             if($scope.mediaPlayer) {
-
                 $scope.mediaPlayer.on('timeupdate', function(event){
                     //console.log(event);
                     this.trackCurrentTime = parseInt(event.currentTarget.currentTime);
 
                     if(!this.songUpdated &&  this.trackCurrentTime > 20) {
-
                         SongSrv.updatePlayedSong($scope.generalPlaylist.audioPlaylist[$scope.mediaPlayer.currentTrack -1], function(){
                             //update local data
                         });
@@ -50,6 +48,16 @@ angular.module("app.controllers", [])
                 theme_name: "Kimono",
                 user_name: "Jane Doe"
             };
+
+            $scope.loadUserPlaylist = function()
+            {
+                if($localStorage.user) {
+                    PlayListSrv.getPlaylists(function (playlists) {
+                        $scope.$storage.playlists = playlists;
+                    });
+                }
+            }
+            $scope.loadUserPlaylist();
         }]
     )
     .controller("NavCtrl",
@@ -686,14 +694,14 @@ angular
 
             this.userPlaylists = PlayListSrv.playlists;
 
-            this.addSong = function (audioElement, artist) {
-
-                audioElement.artist = artist;
+            this.addSong = function (audioElement) {
                 this.audioPlaylist.push(angular.copy(audioElement));
             };
 
-            $scope.bindFunc = function(){
-                console.log($scope.mediaPlayer);
+            this.addSongs = function (songs) {
+                for(i in songs) {
+                    this.addSong(songs[i]);
+                }
             }
 
             this.removeSong = function (index) {
@@ -730,11 +738,9 @@ angular
                   return 0;
                 }
             };
-            $scope.bindFunc();
+
             this.createNewPlaylist = function (song) {
-
                 CreateNewPlaylistSrv.openCreateModal(song);
-
             };
     }])
     .controller('ArtistListingCtrl',
@@ -970,8 +976,9 @@ angular
       };
 
       this.addSongToPlaylist = function (song, playlist) {
-
-        PlayListSrv.addSongToPlaylist(song, playlist);
+        PlayListSrv.addSongToPlaylist(song, playlist, function(data){
+            loggit.logSuccess('Song Added!');
+        });
       };
 
       this.toggleAlbumsList = function () {
@@ -988,80 +995,50 @@ angular
     }])
     .controller(
         'UserPlayListCtrl',
-        ['$routeParams', 'PlayListSrv', 'navigationMenuService',
-        function ($routeParams, PlayListSrv, navigationMenuService) {
+        ['$scope','$routeParams', 'PlayListSrv', 'navigationMenuService','loggit',
+        function ($scope, $routeParams, PlayListSrv, navigationMenuService, loggit) {
 
-        this.PlayListSrv = PlayListSrv;
-        var UserPlaylistVar = [],
-        playlistTitle, playlistImage, playlistBanner, playlistGenre, playlistUrlName;
+            this.PlayListSrv = PlayListSrv;
+            $scope.playList;
+            var UserPlaylistVar = [],
+            playlistTitle, playlistImage, playlistBanner, playlistGenre, playlistUrlName;
 
-        PlayListSrv.getPlaylist($routeParams.title, function (response) {
-
-            if (typeof response.songs != "undefined") {
-
-                _.map(response.songs, function (song) {
-                    var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
-                    UserPlaylistVar.push({
-                        image: song.image,
-                        src: song.url,
-                        url: song.url,
-                        type: song.type,
-                        artist: parseTitle[1],
-                        title: parseTitle[2],
-                        displayName: song.displayName
-                    });
-              });
-
-              playlistTitle = response.name;
-              playlistImage = response.image;
-              playlistBanner = response.banner;
-              playlistGenre = response.genre;
-              playlistUrlName = response.url_name;
-            }
-        });
-
-        this.userPlaylist = UserPlaylistVar;
-        this.playlistName = playlistTitle;
-        this.playlistImage = playlistImage;
-        this.playlistBanner = playlistBanner;
-        this.playlistGenre = playlistGenre;
-        this.playlistUrlName = playlistUrlName;
-
-        this.addSongs = function (playlist, callback) {
-
-            _.each(UserPlaylistVar, function (audioElement) {
-                playlist.push(angular.copy(audioElement));
-
-                if ((UserPlaylistVar.indexOf(audioElement) + 1) == UserPlaylistVar.length) {
-            // Callback goes here
-                    if (callback) {
-                        callback();
-                    }
-                }
+            PlayListSrv.getPlaylist($routeParams.title, function (response) {
+                $scope.playList = response;
             });
 
-            navigationMenuService.menu = false;
-            navigationMenuService.playlist = true;
-      };
+            this.addSongs = function (songs, generalPlaylist, callback) {
+                for(i in songs) {
+                    generalPlaylist.push(angular.copy(songs[i]));
+                }
 
-      this.addSongsAndPlay = function (playlist, mediaPlayer) {
+                if (callback) {
+                    console.log('callback is called');
+                    callback();
+                }
 
-        this.addSongs(playlist, function () {
+                navigationMenuService.menu = false;
+                navigationMenuService.playlist = true;
+            };
 
-          setTimeout(function () {
-            mediaPlayer.play();
-          }, 1000);
+            this.addSongsAndPlay = function (playlist, generalPlaylist, mediaPlayer) {
+                this.addSongs(playlist.songs, generalPlaylist , function () {
+                    setTimeout(function () {
+                        mediaPlayer.play();
+                    }, 1000);
+                });
 
-        });
+            };
 
-      };
+            this.addSongToPlaylist = function (song, playlist) {
 
-      this.addSongToPlaylist = function (song, playlist) {
+                PlayListSrv.addSongToPlaylist(song, playlist, function (data){
+                    console.log('song added');
+                    loggit.logSuccess('Song added!');
+                });
+            };
 
-        PlayListSrv.addSongToPlaylist(song, playlist);
-      };
-
-      this.removeSongFromPlaylist = function (song, playlist) {
+            this.removeSongFromPlaylist = function (song, playlist) {
 
         PlayListSrv.removeSongFromPlaylist(song, playlist);
 
@@ -1079,6 +1056,7 @@ angular
             $scope.song = song;
 
             $scope.ok = function () {
+                console.log('create playlist');
 
                 if ($scope.playlistName !== "") {
                     $modalInstance.close($scope);

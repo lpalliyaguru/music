@@ -7876,6 +7876,8 @@ label {
   .music-listing .music-listing__songs .music-listing__thumbnail {
     float: left;
     margin-right: 10px; }
+.music-listing .music-listing__songs .music-listing__song-name {
+    min-height: 35px;}
     .music-listing .music-listing__songs .music-listing__thumbnail img {
       width: 35px;
       height: auto;
@@ -8377,5 +8379,4 @@ label {
     margin-top: 10px; }
     .now-playing .now-playing__artist i {
       color: #1FAE5B; }
-
 /*# sourceMappingURL=styles.css.map */

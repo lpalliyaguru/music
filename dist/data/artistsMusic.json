@@ -2,8 +2,8 @@
   {
     "url_name": "thelunatics",
     "name": "The lunatics",
-    "banner": "dist/images/artists/artistbanner1.jpg",
-    "image": "dist/images/artists/artist1.jpg",
+    "banner": "images/artists/artistbanner1.jpg",
+    "image": "images/artists/artist1.jpg",
     "genre": [
       "Pop",
       "Rock",
@@ -13,41 +13,41 @@
     "albums": [
       {
         "album_name": "The king of Freedom",
-        "album_image": "dist/images/albums/album1.jpg",
+        "album_image": "images/albums/album1.jpg",
         "album_release": "April 2010",
         "songs": [
           {
-            "image": "dist/images/songs/song1.jpg",
+            "image": "images/songs/song1.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "The lunatics - Come Together",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song2.jpg",
+            "image": "images/songs/song2.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "The lunatics - Drive my car",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song3.jpg",
+            "image": "images/songs/song3.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "The lunatics - Loser",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song4.jpg",
+            "image": "images/songs/song4.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "The lunatics - All my loving",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song5.jpg",
+            "image": "images/songs/song5.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "The lunatics - Taxman",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song6.jpg",
+            "image": "images/songs/song6.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "The lunatics - Tonight we do",
             "type": "audio/mpeg"
@@ -56,47 +56,47 @@
       },
       {
         "album_name": "Blue cherry sky",
-        "album_image": "dist/images/albums/album2.jpg",
+        "album_image": "images/albums/album2.jpg",
         "album_release": "April 2003",
         "songs": [
           {
-            "image": "dist/images/songs/song20.jpg",
+            "image": "images/songs/song20.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - Laetha",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song19.jpg",
+            "image": "images/songs/song19.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "La fiesta negra - Only if",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song18.jpg",
+            "image": "images/songs/song18.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "La fiesta negra - Trains over fall",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song17.jpg",
+            "image": "images/songs/song17.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - Nothing else",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song16.jpg",
+            "image": "images/songs/song16.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "La fiesta negra - Tonight we are",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song15.jpg",
+            "image": "images/songs/song15.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "La fiesta negra - In the night",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song14.jpg",
+            "image": "images/songs/song14.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - Nothing else",
             "type": "audio/mpeg"
@@ -108,8 +108,8 @@
   {
     "url_name": "lafiestanegra",
     "name": "La fiesta negra",
-    "banner": "dist/images/artists/artistbanner2.jpg",
-    "image": "dist/images/artists/artist2.jpg",
+    "banner": "images/artists/artistbanner2.jpg",
+    "image": "images/artists/artist2.jpg",
     "genre": [
       "New age",
       "Celtic",
@@ -119,47 +119,47 @@
     "albums": [
       {
         "album_name": "La fiesta changa",
-        "album_image": "dist/images/albums/album3.jpg",
+        "album_image": "images/albums/album3.jpg",
         "album_release": "May 2010",
         "songs": [
           {
-            "image": "dist/images/songs/song1.jpg",
+            "image": "images/songs/song1.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - Come Together",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song2.jpg",
+            "image": "images/songs/song2.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "La fiesta negra - Drive my car",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song3.jpg",
+            "image": "images/songs/song3.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "La fiesta negra - Loser",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song4.jpg",
+            "image": "images/songs/song4.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - All my loving",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song5.jpg",
+            "image": "images/songs/song5.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "La fiesta negra - Taxman",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song6.jpg",
+            "image": "images/songs/song6.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - Tonight we do",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song7.jpg",
+            "image": "images/songs/song7.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "La fiesta negra - Revolver",
             "type": "audio/mpeg"
@@ -168,53 +168,53 @@
       },
       {
         "album_name": "Beneath the still sky",
-        "album_image": "dist/images/albums/album4.jpg",
+        "album_image": "images/albums/album4.jpg",
         "album_release": "August 2001",
         "songs": [
           {
-            "image": "dist/images/songs/song20.jpg",
+            "image": "images/songs/song20.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - Laetha",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song19.jpg",
+            "image": "images/songs/song19.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "La fiesta negra - Only if",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song18.jpg",
+            "image": "images/songs/song18.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "La fiesta negra - Trains over fall",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song17.jpg",
+            "image": "images/songs/song17.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - Nothing else",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song16.jpg",
+            "image": "images/songs/song16.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "La fiesta negra - Tonight we are",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song15.jpg",
+            "image": "images/songs/song15.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "La fiesta negra - In the night",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song14.jpg",
+            "image": "images/songs/song14.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "La fiesta negra - Nothing else",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song13.jpg",
+            "image": "images/songs/song13.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "La fiesta negra - The truth",
             "type": "audio/mpeg"
@@ -226,8 +226,8 @@
   {
     "url_name": "kingofthemood",
     "name": "King of the mood",
-    "banner": "dist/images/artists/artistbanner3.jpg",
-    "image": "dist/images/artists/artist3.jpg",
+    "banner": "images/artists/artistbanner3.jpg",
+    "image": "images/artists/artist3.jpg",
     "genre": [
       "Pop",
       "Rock",
@@ -237,53 +237,53 @@
     "albums": [
       {
         "album_name": "The man who gave up",
-        "album_image": "dist/images/albums/album5.jpg",
+        "album_image": "images/albums/album5.jpg",
         "album_release": "April 2012",
         "songs": [
           {
-            "image": "dist/images/songs/song1.jpg",
+            "image": "images/songs/song1.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "King of the mood - Come Together",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song2.jpg",
+            "image": "images/songs/song2.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "King of the mood - Drive my car",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song3.jpg",
+            "image": "images/songs/song3.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "King of the mood - Loser",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song4.jpg",
+            "image": "images/songs/song4.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "King of the mood - All my loving",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song5.jpg",
+            "image": "images/songs/song5.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "King of the mood - Taxman",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song6.jpg",
+            "image": "images/songs/song6.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "King of the mood - Tonight we do",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song7.jpg",
+            "image": "images/songs/song7.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "King of the mood - Revolver",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song8.jpg",
+            "image": "images/songs/song8.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "King of the mood - Here comes the sun",
             "type": "audio/mpeg"
@@ -292,53 +292,53 @@
       },
       {
         "album_name": "When tomorrow comes",
-        "album_image": "dist/images/albums/album6.jpg",
+        "album_image": "images/albums/album6.jpg",
         "album_release": "June 2000",
         "songs": [
           {
-            "image": "dist/images/songs/song20.jpg",
+            "image": "images/songs/song20.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "King of the mood - Laetha",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song19.jpg",
+            "image": "images/songs/song19.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "King of the mood - Only if",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song18.jpg",
+            "image": "images/songs/song18.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "King of the mood - Trains over fall",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song17.jpg",
+            "image": "images/songs/song17.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "King of the mood - Nothing else",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song16.jpg",
+            "image": "images/songs/song16.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "King of the mood - Tonight we are",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song15.jpg",
+            "image": "images/songs/song15.jpg",
             "url": "http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3",
             "displayName": "King of the mood - In the night",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song14.jpg",
+            "image": "images/songs/song14.jpg",
             "url": "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3",
             "displayName": "King of the mood - Nothing else",
             "type": "audio/mpeg"
           },
           {
-            "image": "dist/images/songs/song13.jpg",
+            "image": "images/songs/song13.jpg",
             "url": "http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3",
             "displayName": "King of the mood - The truth",
             "type": "audio/mpeg"
@@ -346,38 +346,5 @@
         ]
       }
     ]
-  }, 
- {
-    "url_name": "karunaratne_divulgane",
-    "name": "Karunaratne Divulgane",
-    "banner": "dist/images/artists/artistbanner1.jpg",
-    "image": "dist/images/artists/artist1.jpg",
-    "genre": [
-      "Rock",
-      "Folk"
-    ],
-    "about": "Great music inspired by early electronic sounds, combining the symphony of classical instruments and complete surrounding",
-    "albums": [
-		{
-        "album_name": "When tomorrow comes",
-        "album_image": "dist/images/albums/album6.jpg",
-        "album_release": "June 2000",
-        "songs": [
-          {
-            "image": "dist/images/songs/song20.jpg",
-            "url": "https://s3-ap-southeast-1.amazonaws.com/musiclocalmp3/divulgane/Asata+Asuwana+Maime.mp3",
-            "displayName": "Divulgane - General Album",
-            "type": "audio/mpeg"
-          },
-          {
-            "image": "dist/images/songs/song19.jpg",
-            "url": "https://s3-ap-southeast-1.amazonaws.com/musiclocalmp3/divulgane/Anjanam+Deviye.mp3",
-            "displayName": "Divulgane - General Album",
-            "type": "audio/mpeg"
-          }
-        ]
-      }
-	
-	]
   }
 ]
