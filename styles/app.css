@@ -1,2 +1,10 @@
+.inner-page{ position: relative!important;}
 .header-actions{}
 .header-actions .signin-link{ font-size: 13px; }
+.music-covers-listing .list-item__image {
+    height: 140px;}
+.music-covers-listing .artist-item { height: 200px}
+.music-covers-listing .img-fake-wrapper {    height: 140px;
+    width: 150px;
+
+}

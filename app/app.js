@@ -3,115 +3,116 @@
  Initialize the Angular App
  **************************/
 
-var app = angular.module("app", ["ngRoute", "ngAnimate","ngResource","toastr", "app.config","ngStorage", "ui.bootstrap", "mgo-angular-wizard", "ui.tree", "ngMap", "ngTagsInput", "app.ui.ctrls", "app.ui.services", "app.controllers", "app.directives", "app.form.validation", "app.ui.form.ctrls", "app.ui.form.directives", "app.tables", "app.map", "countTo", "mediaPlayer","ngDragDrop", "app.music"]).run(["$rootScope", "$location","loggit",
-    function ($rootScope, $location,loggit) {
+var app = angular
+        .module("app", ["ngRoute", "ngAnimate","ngResource","toastr", "app.config","ngStorage", "ui.bootstrap", "mgo-angular-wizard", "ui.tree", "ngMap", "ngTagsInput", "app.ui.ctrls", "app.ui.services", "app.controllers", "app.directives", "app.form.validation", "app.ui.form.ctrls", "app.ui.form.directives", "app.tables", "app.map", "countTo", "mediaPlayer","ngDragDrop", "app.music"])
+        .run(
+            ["$rootScope", "$location","loggit",
+            function ($rootScope, $location,loggit) {
+                $(document).ready(function(){
 
-        $(document).ready(function(){
+                    setTimeout(function(){
+                        $('.page-loading-overlay').addClass("loaded");
+                        $('.load_circle_wrapper').addClass("loaded");
 
-            setTimeout(function(){
-                $('.page-loading-overlay').addClass("loaded");
-                $('.load_circle_wrapper').addClass("loaded");
+                        loggit.logSuccess("Welcome to Groovy! Navigate and add songs to your playlists.");
 
-                loggit.logSuccess("Welcome to Groovy! Navigate and add songs to your playlists.");
+                    },1000);
 
-            },1000);
+                });
 
-        });
+            }])
+        .config(
+            ["$routeProvider",
+            function($routeProvider) {
 
-    }])
-    .config(
-        ["$routeProvider",
-        function($routeProvider) {
-
-            return $routeProvider.when("/", {
-                redirectTo: "/dashboard"
-            }).when("/dashboard", {
-                templateUrl: "views/dashboards/dashboard.html"
-            }).when("/logout", {
-                templateUrl: "views/pages/logout.html"
-            }).when("/dashboard/dashboard", {
-                templateUrl: "views/dashboards/dashboard.html"
-            }).when("/ui/typography", {
-                templateUrl: "views/ui_elements/typography.html"
-            }).when("/ui/buttons", {
-                templateUrl: "views/ui_elements/buttons.html"
-            }).when("/ui/icons", {
-                templateUrl: "views/ui_elements/icons.html"
-            }).when("/ui/grids", {
-                templateUrl: "views/ui_elements/grids.html"
-            }).when("/ui/widgets", {
-                templateUrl: "views/ui_elements/widgets.html"
-            }).when("/ui/components", {
-                templateUrl: "views/ui_elements/components.html"
-            }).when("/ui/timeline", {
-                templateUrl: "views/ui_elements/timeline.html"
-            }).when("/ui/nested-lists", {
-                templateUrl: "views/ui_elements/nested-lists.html"
-            }).when("/playlist/sample", {
-                templateUrl: "views/playlist/sample.html"
-            }).when("/artist/:title", {
-              templateUrl: "views/playlist/artist.html"
-            }).when("/playlist/:title", {
-              templateUrl: "views/playlist/playlist.html"
-            }).when("/artist-list", {
-              templateUrl: "views/playlist/artists-list.html"
-            }).when("/albums", {
-              templateUrl: "views/playlist/albums.html"
-            }).when("/album/:title", {
-              templateUrl: "views/playlist/album.html"
-            }).when("/genres", {
-              templateUrl: "views/playlist/genres.html"
-            }).when("/forms/elements", {
-                templateUrl: "views/forms/elements.html"
-            }).when("/forms/layouts", {
-                templateUrl: "views/forms/layouts.html"
-            }).when("/forms/validation", {
-                templateUrl: "views/forms/validation.html"
-            }).when("/forms/wizard", {
-                templateUrl: "views/forms/wizard.html"
-            }).when("/maps/gmap", {
-                templateUrl: "views/maps/gmap.html"
-            }).when("/maps/jqvmap", {
-                templateUrl: "views/maps/jqvmap.html"
-            }).when("/tables/static", {
-                templateUrl: "views/tables/static.html"
-            }).when("/tables/responsive", {
-                templateUrl: "tables/responsive.html"
-            }).when("/tables/dynamic", {
-                templateUrl: "views/tables/dynamic.html"
-            }).when("/mail/inbox", {
-                templateUrl: "views/mail/inbox.html"
-            }).when("/mail/compose", {
-                templateUrl: "views/mail/compose.html"
-            }).when("/mail/single", {
-                templateUrl: "views/mail/single.html"
-            }).when("/pages/features", {
-                templateUrl: "views/pages/features.html"
-            }).when("/front", {
-              templateUrl: "views/pages/frontpage.html"
-            }).when("/pages/signin", {
-                templateUrl: "views/pages/signin.html"
-            }).when("/pages/signup", {
-                templateUrl: "views/pages/signup.html"
-            }).when("/pages/forgot", {
-                templateUrl: "views/pages/forgot-password.html"
-            }).when("/pages/profile", {
-                templateUrl: "views/pages/profile.html"
-            }).when("/404", {
-                templateUrl: "views/pages/404.html"
-            }).when("/pages/500", {
-                templateUrl: "views/pages/500.html"
-            }).when("/pages/blank", {
-                templateUrl: "views/pages/blank.html"
-            }).when("/pages/contact", {
-                templateUrl: "views/pages/contact.html"
-            }).otherwise({
-                redirectTo: "/404"
-            });
-        }
-        ]
-    )
-    .config(
+                return $routeProvider.when("/", {
+                    redirectTo: "/dashboard"
+                }).when("/dashboard", {
+                    templateUrl: "views/dashboards/dashboard.html"
+                }).when("/logout", {
+                    templateUrl: "views/pages/logout.html"
+                }).when("/dashboard/dashboard", {
+                    templateUrl: "views/dashboards/dashboard.html"
+                }).when("/ui/typography", {
+                    templateUrl: "views/ui_elements/typography.html"
+                }).when("/ui/buttons", {
+                    templateUrl: "views/ui_elements/buttons.html"
+                }).when("/ui/icons", {
+                    templateUrl: "views/ui_elements/icons.html"
+                }).when("/ui/grids", {
+                    templateUrl: "views/ui_elements/grids.html"
+                }).when("/ui/widgets", {
+                    templateUrl: "views/ui_elements/widgets.html"
+                }).when("/ui/components", {
+                    templateUrl: "views/ui_elements/components.html"
+                }).when("/ui/timeline", {
+                    templateUrl: "views/ui_elements/timeline.html"
+                }).when("/ui/nested-lists", {
+                    templateUrl: "views/ui_elements/nested-lists.html"
+                }).when("/playlist/sample", {
+                    templateUrl: "views/playlist/sample.html"
+                }).when("/artist/:title", {
+                  templateUrl: "views/playlist/artist.html"
+                }).when("/playlist/:title", {
+                  templateUrl: "views/playlist/playlist.html"
+                }).when("/artist-list", {
+                  templateUrl: "views/playlist/artists-list.html"
+                }).when("/albums", {
+                  templateUrl: "views/playlist/albums.html"
+                }).when("/album/:title", {
+                  templateUrl: "views/playlist/album.html"
+                }).when("/genres", {
+                  templateUrl: "views/playlist/genres.html"
+                }).when("/forms/elements", {
+                    templateUrl: "views/forms/elements.html"
+                }).when("/forms/layouts", {
+                    templateUrl: "views/forms/layouts.html"
+                }).when("/forms/validation", {
+                    templateUrl: "views/forms/validation.html"
+                }).when("/forms/wizard", {
+                    templateUrl: "views/forms/wizard.html"
+                }).when("/maps/gmap", {
+                    templateUrl: "views/maps/gmap.html"
+                }).when("/maps/jqvmap", {
+                    templateUrl: "views/maps/jqvmap.html"
+                }).when("/tables/static", {
+                    templateUrl: "views/tables/static.html"
+                }).when("/tables/responsive", {
+                    templateUrl: "tables/responsive.html"
+                }).when("/tables/dynamic", {
+                    templateUrl: "views/tables/dynamic.html"
+                }).when("/mail/inbox", {
+                    templateUrl: "views/mail/inbox.html"
+                }).when("/mail/compose", {
+                    templateUrl: "views/mail/compose.html"
+                }).when("/mail/single", {
+                    templateUrl: "views/mail/single.html"
+                }).when("/pages/features", {
+                    templateUrl: "views/pages/features.html"
+                }).when("/front", {
+                  templateUrl: "views/pages/frontpage.html"
+                }).when("/pages/signin", {
+                    templateUrl: "views/pages/signin.html"
+                }).when("/pages/signup", {
+                    templateUrl: "views/pages/signup.html"
+                }).when("/pages/forgot", {
+                    templateUrl: "views/pages/forgot-password.html"
+                }).when("/pages/profile", {
+                    templateUrl: "views/pages/profile.html"
+                }).when("/404", {
+                    templateUrl: "views/pages/404.html"
+                }).when("/pages/500", {
+                    templateUrl: "views/pages/500.html"
+                }).when("/pages/blank", {
+                    templateUrl: "views/pages/blank.html"
+                }).when("/pages/contact", {
+                    templateUrl: "views/pages/contact.html"
+                }).otherwise({
+                    redirectTo: "/404"
+                });
+            }])
+        .config(
+            ["$routeProvider", "$localStorageProvider", "$httpProvider", "toastrConfig",
             function($routeProvider, $localStorageProvider, $httpProvider, toastrConfig) {
 
                 if ($localStorageProvider.get('token')) {
@@ -121,7 +122,8 @@ var app = angular.module("app", ["ngRoute", "ngAnimate","ngResource","toastr", "
                $httpProvider.interceptors.push(function ($q) {
                     return {
                         'responseError': function (responseError) {
-                            alert(responseError.statusText)
+                            //toastrConfig.
+                            //toastrConfig.error(responseError.statusText)
                             if (responseError.status == 403 || responseError.status == 401) {
                                 location.hash = '#/pages/signin';
                             }
@@ -130,7 +132,7 @@ var app = angular.module("app", ["ngRoute", "ngAnimate","ngResource","toastr", "
                     };
                 });
             }
-    )
+        ])
 ;
 
 
