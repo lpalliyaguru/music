@@ -404,11 +404,11 @@ angular.module("app.ui.services", []).factory("loggit", [
                     ;
                 },
                 login: function ($scope) {
-
                     $http
                         .post(apiUrl + '/api/login', {username: $scope.username, password: $scope.password})
                         .success(function (data) {
                             if (data.success) {
+                                $scope.logging = false;
                                 $scope.$storage.token = data.access_token;
                                 $scope.$storage.user = data.user;
                                 $http.defaults.headers.common['Authentication'] = $scope.$storage.token.access_token;
@@ -418,12 +418,11 @@ angular.module("app.ui.services", []).factory("loggit", [
                             else {
                                 toastr.error('Login Failed!');
                             }
-
-
                             //$state.go('home');
                             $scope.logging = false;
                         })
                         .error(function (error) {
+                            toastr.error('Something went wrong. Please try again!');
                             $scope.logging = false;
                         })
                     ;
@@ -437,6 +436,17 @@ angular.module("app.ui.services", []).factory("loggit", [
                         toastr.error('Something went wrong. Please try again');
                     });
                 },
+                getFollowingArtists : function(id){
+                    $http
+                        .get(apiUrl + '/user/' + id + '/get-following-artists' )
+                        .success(function(data){
+                            console.log();
+                        })
+                        .error(function (error) {
+
+                        })
+                    ;
+                }
             }
             return self;
         }])
@@ -464,18 +474,20 @@ angular.module("app.ui.services", []).factory("loggit", [
         return self;
     }])
     .factory(
-    'User',
-    ["$resource",
-        function ($resource) {
-            return $resource(apiUrl + '/api/user/:id/:action',
-                {
-                    id: '@id'
-                },
-                {
-                    'update': {
-                        method: 'PUT'
+        'User',
+        ["$resource",
+            function ($resource) {
+                return $resource(apiUrl + '/api/user/:id/:action',
+                    {
+                        id: '@id'
+                    },
+                    {
+                        'update': {
+                            method: 'PUT'
+                        }
                     }
-                }
-            );
-        }])
+                );
+            }
+        ]
+    )
 ;

@@ -1083,6 +1083,15 @@ angular
             }
             $scope.logout($localStorage);
         }]
+    )
+    .controller(
+        "ProfileCtrl",
+        ["$scope", "UserService","$localStorage",
+        function ($scope, UserService, $localStorage) {
+
+            $scope.profile = $localStorage.user;
+            $scope.following  = UserService.getFollowingArtists($localStorage.user.id);
+        }]
 )
 
 ;

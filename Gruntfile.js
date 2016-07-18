@@ -185,6 +185,7 @@ module.exports = function(grunt) {
                             'bower_components/dripicons/css/dripicons.css',
                             'bower_components/weather-icons/css/weather-icons.min.css',
                             'bower_components/angular-toastr/dist/angular-toastr.min.css',
+                            'bower_components/ladda/dist/ladda-themeless.min.css',
                             'styles/fonts/music-icons/music-icons.css',
                             'styles/styles.css',
                             'styles/app.css'
@@ -242,6 +243,9 @@ module.exports = function(grunt) {
                         'bower_components/jqvmap/dist/jquery.vmap.min.js',
                         'bower_components/angular-scroll/angular-scroll.min.js',
                         'bower_components/html5shiv/dist/html5shiv.min.js',
+                        'bower_components/ladda/dist/spin.min.js',
+                        'bower_components/ladda/dist/ladda.min.js',
+                        'bower_components/angular-ladda/dist/angular-ladda.min.js',
                         'scripts/angular-dragdrop.js',
                         'scripts/extras.js',
                         'app/*.js'
