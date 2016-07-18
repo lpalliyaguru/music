@@ -4,4 +4,4 @@ node_modules
 bower_components
 styles/*/*.css
 aws-credentials.json
-dist/
+dist/*
