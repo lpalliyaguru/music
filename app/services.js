@@ -437,15 +437,11 @@ angular.module("app.ui.services", []).factory("loggit", [
                     });
                 },
                 getFollowingArtists : function(id){
-                    $http
-                        .get(apiUrl + '/user/' + id + '/get-following-artists' )
-                        .success(function(data){
-                            console.log();
-                        })
-                        .error(function (error) {
 
-                        })
-                    ;
+                    return User.query({
+                        "id": id,
+                        "action" : 'get-following-artists'
+                    });
                 }
             }
             return self;
@@ -479,7 +475,8 @@ angular.module("app.ui.services", []).factory("loggit", [
             function ($resource) {
                 return $resource(apiUrl + '/api/user/:id/:action',
                     {
-                        id: '@id'
+                        id: '@id',
+                        action: '@action'
                     },
                     {
                         'update': {

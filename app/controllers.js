@@ -855,7 +855,7 @@ angular
             };
 
             this.addSongsAndPlay = function (playlist, mediaPlayer) {
-
+                console.log(playlist);
                 this.addSongs(playlist, function () {
                     setTimeout(function () {
                         mediaPlayer.play();
@@ -888,7 +888,7 @@ angular
             $scope.isFollowing = false;
             var that = this;
             this.follow = function () {
-                this.ArtistSrv.followArtist(this.artistObject, function (response) {
+                this.ArtistSrv.followArtist($scope.artist, function (response) {
                     $scope.followers.unshift($localStorage.user);
                     $scope.isFollowing = true;
                     loggit.logSuccess(response.message);
@@ -899,7 +899,7 @@ angular
 
             this.unfollow = function () {
 
-                this.ArtistSrv.unfollowArtist(this.artistObject, function (response) {
+                this.ArtistSrv.unfollowArtist($scope.artist, function (response) {
                     for (i in $scope.followers) {
                         for (f in  $scope.followers) {
                             if ($scope.followers[i].id == $localStorage.user.id) {
@@ -964,7 +964,7 @@ angular
             };
 
             this.addSongsAndPlay = function (playlist, mediaPlayer) {
-
+                console.log(playlist);
                 this.addSongs(playlist, function () {
 
                     setTimeout(function () {
@@ -1089,8 +1089,9 @@ angular
         ["$scope", "UserService","$localStorage",
         function ($scope, UserService, $localStorage) {
 
-            $scope.profile = $localStorage.user;
-            $scope.following  = UserService.getFollowingArtists($localStorage.user.id);
+            $scope.profile = UserService.get($localStorage.user.id);
+            $scope.followings = UserService.getFollowingArtists($localStorage.user.id);
+            console.log($scope.followings );
         }]
 )
 

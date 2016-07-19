@@ -1,3 +1,9 @@
+/* Template css overridings */
+body {color: #639BF1!important;}
+.btn-primary { background-color: #35c540!important; }
+.progress-bar { background-color: #639BF1!important; background-image: none}
+.logo{background: #293E6A!important;}
+
 .inner-page{ position: relative!important;}
 .header-actions{}
 .header-actions .signin-link{ font-size: 13px; }

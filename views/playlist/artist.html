@@ -1,17 +1,16 @@
-<div data-ng-controller="ArtistCtrl as artist">
-    <div class="artist-banner" data-ng-show="artistBanner" style="background-image:url({{artistBanner}});">
+<div data-ng-controller="ArtistCtrl as artistCtrl">
+    <div class="artist-banner" data-ng-show="artist.banner" style="background-image:url({{artist.banner}});">
         <div class="artist-inner">
 
-            <div class="artist-img" data-ng-show="artistImage">
-                <img ng-src="{{artistImage}}" class="img-circle img-polaroid"/>
+            <div class="artist-img" data-ng-show="artist.image">
+                <img ng-src="{{artist.image}}" class="img-circle img-polaroid"/>
             </div>
-            {{ scope }}
             <h3>
-                {{artistName}}
+                {{artist.name}}
             </h3>
 
             <h5>
-                {{artistAbout}}
+                {{artist.about}}
             </h5>
 
             <div class="artist-style">
@@ -27,19 +26,19 @@
 
         <div class="artist-stats-block">
             <div class="share-artist__buttons">
-                <a target="_blank" href="{{ artist.artistObject.social.tw }}" class="btn-icon btn-icon-sm btn-twitter"
+                <a target="_blank" href="{{ artist.social.tw }}" class="btn-icon btn-icon-sm btn-twitter"
                    tooltip-placement="bottom" tooltip="Twitter" tooltip-append-to-body="true"><i
                         class="fa fa-twitter"></i></a>
-                <a target="_blank" href="{{ artist.artistObject.social.fb }}" class="btn-icon btn-icon-sm btn-facebook"
+                <a target="_blank" href="{{ artist.social.fb }}" class="btn-icon btn-icon-sm btn-facebook"
                    tooltip-placement="bottom" tooltip="Facebook" tooltip-append-to-body="true"><i
                         class="fa fa-facebook"></i></a>
-                <a target="_blank" href="javascript:;" class="btn-icon btn-icon-sm btn-google-plus"
+                <a target="_blank" href="{{ artist.social.gl }}" class="btn-icon btn-icon-sm btn-google-plus"
                    tooltip-placement="bottom" tooltip="Google plus" tooltip-append-to-body="true"><i
                         class="fa fa-google-plus"></i></a>
-                <a target="_blank" href="javascript:;" class="btn-icon btn-icon-sm btn-pinterest"
+                <a target="_blank" href="{{ artist.social.pn }}" class="btn-icon btn-icon-sm btn-pinterest"
                    tooltip-placement="bottom" tooltip="Pinterest" tooltip-append-to-body="true"><i
                         class="fa fa-pinterest"></i></a>
-                <a target="_blank" href="javascript:;" class="btn-icon btn-icon-sm btn-instagram"
+                <a target="_blank" href="{{ artist.social.in }}" class="btn-icon btn-icon-sm btn-instagram"
                    tooltip-placement="bottom" tooltip="Instagram" tooltip-append-to-body="true"><i
                         class="fa fa-instagram"></i></a>
             </div>
@@ -48,7 +47,7 @@
         <div class="artist-stats-block pull-right">
             <button
                     class="btn {{ isFollowing ? 'btn-primary' : 'btn-default' }}"
-                    data-ng-click="isFollowing ? artist.unfollow() : artist.follow()">
+                    data-ng-click="isFollowing ? artistCtrl.unfollow() : artistCtrl.follow()">
                 {{isFollowing ? "Unfollow this artist" : "Follow Artist" }}
             </button>
         </div>
@@ -69,7 +68,7 @@
                             <div class="music-listing__header">
 
                                 <div class="music-listing__actions-top">
-                                    <button ng-click="artist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)"
+                                    <button ng-click="artistCtrl.addSongsAndPlay(generalPlaylist.audioPlaylist, mediaPlayer)"
                                             class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Play all
                                     </button>
                                     <!--<button ng-click="artist.addSongs(generalPlaylist.audioPlaylist)" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>-->
