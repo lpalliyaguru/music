@@ -153,17 +153,17 @@
         <div class="playlist-item-list music-listing--queue" ng-show="navigation.navigationState.playlist">
 
             <div class="music-listing__songs">
-                <div class="music-listing__row" ng-repeat="song in generalPlaylist.audioPlaylist"
+                <div class="music-listing__row" ng-repeat="song in player.songQueue"
                      ng-class="{ active: mediaPlayer.playing && mediaPlayer.currentTrack-1 === $index }"
-                     ui-draggable="true" drag="song" on-drop-success="generalPlaylist.removeSong($index)"
-                     ui-on-drop="generalPlaylist.dropSong($data, $index)">
+                     ui-draggable="true" drag="song" on-drop-success="player.removeSong($index)"
+                     ui-on-drop="player.dropSong($data, $index)">
 
                     <div class="music-listing__number">
                         {{ $index+1 }}
                     </div>
 
                     <div class="music-listing__row-actions">
-                        <i class="fa fa-times action" ng-click="generalPlaylist.removeSong($index)"
+                        <i class="fa fa-times action" ng-click="player.removeSong($index)"
                            title="Remove song"></i>
                         <i class="fa fa-list action" title="More Options..."></i>
                     </div>
@@ -186,7 +186,7 @@
 
                 </div>
 
-                <div class="empty-listing" ng-hide="generalPlaylist.audioPlaylist.length">
+                <div class="empty-listing" ng-hide="player.songQueue.length">
 
                     <div class="empty-listing-icon">
                         <i class="musicicon-dj4">
@@ -210,11 +210,11 @@
     </div>
 
     <div class="player-image-region" ng-show="mediaPlayer.currentTrack"
-         style="background:url({{generalPlaylist.getSongImage(mediaPlayer.currentTrack)}}) no-repeat;">
+         style="background:url({{player.getSongImage(mediaPlayer.currentTrack)}}) no-repeat;">
         <div class="song-info">
             <div class="song-info__text">
-                <div class="song-info__title">{{generalPlaylist.getSongArtist(mediaPlayer.currentTrack).name}}</div>
-                <div>{{generalPlaylist.getSongName(mediaPlayer.currentTrack)}}</div>
+                <div class="song-info__title">{{player.getSongArtist(mediaPlayer.currentTrack).name}}</div>
+                <div>{{player.getSongName(mediaPlayer.currentTrack)}}</div>
             </div>
         </div>
     </div>

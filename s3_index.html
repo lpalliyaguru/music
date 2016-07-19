@@ -13,18 +13,13 @@
           rel='stylesheet' type='text/css'>
 
     <!-- Include Jquery in the vendor folder -->
-    <!-- Main libs -->
-    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="dist/css/font-awesome.min.css">
+    <script src="js/jquery.min.js"></script>
 
-    <!-- Theme's own CSS file : Gruntable -->
-    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.min.css">
-    <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.css">
-    <link rel="stylesheet" href="bower_components/ladda/dist/ladda-themeless.min.css">
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/app.css">
-
+    <!-- Theme's own CSS file -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <noscript>
     <META HTTP-EQUIV="Refresh" CONTENT="0;URL=no-js.html">
@@ -66,12 +61,6 @@
                         <div class="btn" ng-click="mediaPlayer.next()">
                             <i class="fa fa-step-forward"></i>
                         </div>
-                        <!--<div class="btn btn-noclick">
-                          <span>currentTrack: <span class="badge">{{ mediaPlayer.currentTrack }}</span></span>
-                        </div>-->
-                        <!--<div class="btn btn-noclick">
-                          <span><i class="fa fa-clock-o"></i>: <span class="badge">{{ mediaPlayer.formatTime }}</span></span>
-                        </div>-->
                         <div class="btn btn-noclick">
                             <span><span class="badge">{{ mediaPlayer.volume * 100 | number:0 }}%</span></span>
                         </div>
@@ -88,7 +77,7 @@
                         <span class="song-duration-beg">{{ mediaPlayer.formatTime }}</span>
 
                         <div class="progress"
-                             ng-click="mediaPlayer.seek(mediaPlayer.duration * player.seekPercentage($event))">
+                             ng-click="mediaPlayer.seek(mediaPlayer.duration * generalPlaylist.seekPercentage($event))">
                             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
                                  ng-style="{ width: mediaPlayer.currentTime*100/mediaPlayer.duration + '%' }"></div>
                         </div>
@@ -120,52 +109,17 @@
     </div>
 </div>
 
-<!--Uncomment for deployment using Grunt
-<script type="text/javascript" src="dist/js/app.js"></script>
--->
-<!-- Uncomment for deployment without Grunt-->
-<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="scripts/gmap.js"></script>
-<script type="text/javascript" src="bower_components/slimScroll/jquery.slimscroll.min.js"></script>
-<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-wizard/dist/angular-wizard.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-media-player/dist/angular-media-player.min.js"></script>
-<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="bower_components/jqvmap/dist/jquery.vmap.min.js"></script>
-<script type="text/javascript" src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-toastr/dist/angular-toastr.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-<script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
-<script type="text/javascript" src="scripts/angular-dragdrop.js"></script>
-<script type="text/javascript" src="bower_components/ladda/dist/spin.min.js"></script>
-<script type="text/javascript" src="bower_components/ladda/dist/ladda.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-ladda/dist/angular-ladda.min.js"></script>
-<script type="text/javascript" src="scripts/extras.js"></script>
-<script type="text/javascript" src="app/app.js"></script>
-<script type="text/javascript" src="app/config.js"></script>
-<script type="text/javascript" src="app/controllers.js"></script>
-<script type="text/javascript" src="app/directives.js"></script>
-<script type="text/javascript" src="app/factory.js"></script>
-<script type="text/javascript" src="app/services.js"></script>
+<!--Uncomment for deployment using Grunt-->
+<script type="text/javascript" src="js/app.js"></script>
 <script>
     var urlMap = {
         'music.local': 'http://api.music.local',
-        'music.hurry.sg': 'http://api.music.hurry.sg'
+        'music.hurry.sg': 'http://api.music.hurry.sg',
+        'musicapplk2.s3-website-ap-southeast-1.amazonaws.com': 'http://api.music.hurry.sg'
+
     }
     var hostName = window.location.host;
-
     var apiUrl = urlMap[hostName];
-    console.log(apiUrl);
-
-
 </script>
 </body>
 </html>

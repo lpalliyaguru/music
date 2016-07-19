@@ -62,16 +62,13 @@
 
                 <div class="panel panel-default">
                     <div class="panel-body">
-
-                        <div class="music-listing">
+                        <div class="music-listing" ng-hide="artist.albums.length==0">
 
                             <div class="music-listing__header">
 
-                                <div class="music-listing__actions-top">
-                                    <button ng-click="artistCtrl.addSongsAndPlay(generalPlaylist.audioPlaylist, mediaPlayer)"
-                                            class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Play all
-                                    </button>
-                                    <!--<button ng-click="artist.addSongs(generalPlaylist.audioPlaylist)" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>-->
+                                <!--<div class="music-listing__actions-top">
+
+                                    &lt;!&ndash;<button ng-click="artist.addSongs(generalPlaylist.audioPlaylist)" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>&ndash;&gt;
 
                                     <div class="btn-group">
                                         <button type="button"
@@ -90,7 +87,7 @@
                                         </ul>
                                     </div>
 
-                                </div>
+                                </div>-->
 
                                 <div class="music-listing__filter">
                                     <input type="text" class="form-control" ng-model="searchText" placeholder="Filter">
@@ -115,10 +112,10 @@
 
                             </div>
 
-                            <div class="music-listing__songs albumlist">
+                            <div class="music-listing__songs albumlist" >
 
                                 <div class="album-wrapper"
-                                     ng-repeat="album in artist.albums | filter:searchText">
+                                     ng-repeat="album in artist.albums | filter:searchText" ng-hide="album.songs.length == 0">
 
                                     <div class="album_image">
                                         <img ng-src="{{album.image}}" alt="album image"/>
@@ -133,7 +130,14 @@
                                         </h4>
 
                                         <div>
-                                            <a class="btn btn-bordered btn-bordered-primary">Save this album</a>
+
+                                            <button ng-click="player.addSongsToQueue(album.songs)"
+                                                    class="btn btn-primary btn-xs"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Play all
+                                            </button>
+                                            <button
+                                                    class="btn btn-default btn-xs"><i class="fa fa-heart-o"></i>&nbsp;&nbsp;Save
+                                            </button>
+                                            <!--<a class="pull-right" href="" alt="Save this album"><i class="fa fa-save"></i></a>-->
                                         </div>
                                     </div>
                                     <div class="music-listing__row"
@@ -142,7 +146,7 @@
                                         <div class="music-listing__number">
                                             {{ $index+1 }}
                                             <div class="play-button">
-                                                <button ng-click="generalPlaylist.addSong(song, $index)"
+                                                <button ng-click="player.addSongToQueue(song, true)"
                                                         class="btn btn-primary"><i class="fa fa-play-circle"></i>
                                                 </button>
                                             </div>
@@ -197,7 +201,7 @@
                                 </div>
 
                             </div>
-                            <div class="music-listing__songs fulllist" data-ng-show="artist.FullList">
+                            <!--<div class="music-listing__songs fulllist" data-ng-show="artist.FullList">
                                 <div class="music-listing__row full-songs-wrapper"
                                      ng-repeat="song in artistPlaylist | filter:searchText">
                                     <div class="music-listing__number">
@@ -247,7 +251,14 @@
                                     </div>
 
                                 </div>
+                            </div>-->
+
+                        </div>
+                        <div ng-show="artist.albums.length == 0">
+                            <div class="callout-elem callout-elem-info">
+                                <p>No Albums created yet.</p>
                             </div>
+
                         </div>
 
                     </div>

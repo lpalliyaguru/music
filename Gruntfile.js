@@ -325,6 +325,7 @@ module.exports = function(grunt) {
                     },
                     files: [
                         {expand: true, cwd: 'dist/', src: ['**'], dest: '/'},
+                        {src: 's3_index.html', dest:'index.html'}
                        // {expand: true, cwd: 'dist/views/', src: ['**'], dest:     'views/'},
                         //{expand: true, cwd: 'dist/css', src: ['**'], dest: 'css'}, // enable stream to allow large files
                         //{expand: true, cwd: 'assets/prod/', src: ['**'], dest: 'assets/', params: {CacheControl: '2000'}},

@@ -1,5 +1,7 @@
 /* Template css overridings */
 body {color: #639BF1!important;}
+.btn-group-sm>.btn,.btn-sm{padding:5px 20px;font-size:12px;line-height:1.5;border-radius:20px}
+.btn-group-xs>.btn,.btn-xs{padding:3px 15px;font-size:12px;line-height:1.5;border-radius:20px}
 .btn-primary { background-color: #35c540!important; }
 .progress-bar { background-color: #639BF1!important; background-image: none}
 .logo{background: #293E6A!important;}
