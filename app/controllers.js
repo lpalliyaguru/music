@@ -64,9 +64,14 @@ angular.module("app.controllers", [])
         ["$scope", "Helper",
         function ($scope, Helper) {
             this.songQueue = [];
-
+            this.songIdList = [];//this created for easy access to the song queue by song id
             this.addSongToQueue = function (song, force) {
+                var songQueueLength = this.songQueue.length;
                 var length = Helper.uniquePush(angular.copy(song), this.songQueue);
+                var pushed = songQueueLength != length;
+                if(pushed) {
+                    this.songIdList.push(song.id);
+                }
                 if(force) {
                     setTimeout(function () {
                         $scope.mediaPlayer.play(length -1 );
@@ -74,6 +79,26 @@ angular.module("app.controllers", [])
                 }
 
             }
+
+            this.addOrRemoveSong = function(song, add){
+                var i = this.isSongInQueue(song, true);
+                if(add) {
+                    this.addSongToQueue(song);
+                }
+                else {
+                    console.log('removing song from queue', i);
+                    this.removeSong(i);
+                    this.songIdList.splice(this.songIdList.indexOf(song.id), 1);
+                }
+            };
+
+            this.isSongInQueue = function (song, needId) {
+                var exist = this.songIdList.indexOf(song.id);
+                if(needId) return exist;
+                return exist == -1 ? false : true;
+            }
+
+
 
             this.addSongsToQueue = function (songs) {
                 var that=this;
@@ -84,6 +109,7 @@ angular.module("app.controllers", [])
                     $scope.mediaPlayer.play();
                 }, 1000);
             }
+
             this.removeSong = function (index) {
                 this.songQueue.splice(index, 1);
             }

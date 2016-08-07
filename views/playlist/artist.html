@@ -141,7 +141,8 @@
                                         </div>
                                     </div>
                                     <div class="music-listing__row"
-                                         ng-repeat="song in album.songs | filter:searchText">
+                                         ng-repeat="song in album.songs | filter:searchText"
+                                         ng-init="inQ = player.isSongInQueue(song)"   >
 
                                         <div class="music-listing__number">
                                             {{ $index+1 }}
@@ -153,6 +154,9 @@
                                         </div>
 
                                         <div class="music-listing__row-actions">
+                                            <a href="" ng-click="player.addOrRemoveSong(song, !inQ); inQ = !inQ">
+                                                <i ng-class="{ fa: true, 'fa-plus': !inQ, 'fa-check' : inQ,  action : true}"></i>
+                                            </a>
                                             <i class="fa fa-heart action" title="Add to Favorites"></i>
 
                                             <div class="btn-group">
