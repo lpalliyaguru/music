@@ -41,7 +41,8 @@
     <div class="view-container">
 
         <div data-ng-hide="checkIfOwnPage()" data-ng-cloak="" class="no-print">
-            <section data-ng-include=" $storage.user ? 'views/header_complete.html' : 'views/header.html'" id="header"
+            <section data-ng-include=" $storage.user ? 'views/header_complete.html' : 'views/header.html'"
+                     id="header"
                      class="top-header"></section>
         </div>
         <section data-ng-view="" id="content" class="animate-fade-up" ng-class="{fixed:checkIfFixedPage()}"></section>
@@ -148,6 +149,7 @@
 <script type="text/javascript" src="bower_components/ladda/dist/spin.min.js"></script>
 <script type="text/javascript" src="bower_components/ladda/dist/ladda.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-ladda/dist/angular-ladda.min.js"></script>
+<script type="text/javascript" src="bower_components/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
 <script type="text/javascript" src="scripts/extras.js"></script>
 <script type="text/javascript" src="app/app.js"></script>
 <script type="text/javascript" src="app/config.js"></script>

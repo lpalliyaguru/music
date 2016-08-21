@@ -6,8 +6,8 @@
 angular.module("app.controllers", [])
     .controller(
     "AdminAppCtrl",
-    ["$scope", "$location", "$localStorage", "SongSrv", "PlayListSrv",
-        function ($scope, $location, $localStorage, SongSrv, PlayListSrv) {
+    ["$scope", "$location", "$localStorage", "SongSrv", "PlayListSrv", "$q", "UtilService",
+        function ($scope, $location, $localStorage, SongSrv, PlayListSrv, $q, UtilService) {
             this.songUpdated = false;
             this.trackCurrentTime = 0;
 
@@ -57,8 +57,47 @@ angular.module("app.controllers", [])
                 }
             }
             $scope.loadUserPlaylist();
+            //NG-TypeHEAD
+
+
         }]
     )
+    .controller("SearchCtrl", ["$scope", "$http", function($scope, $http){
+        var _selected;
+
+        $scope.selected = undefined;
+        $scope.loading = false;
+        $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+        $scope.getLocation = function(val) {
+            $scope.loading = true;
+            return $http.get(apiUrl + '/api/search', {
+                params: {
+                    search: val,
+                    sensor: false
+                }
+            }).then(function(response){
+                var list = [];
+                for( i in response.data.data ) {
+                    list.push({
+                        name : response.data.data[i].name,
+                        id : response.data.data[i].id,
+                        image : response.data.data[i].image,
+                        type : 'artist',
+                        item_id : response.data.data[i].artist_id
+                    }) ;
+                }
+                $scope.loading = false;
+                return list;
+            });
+        };
+        $scope.ngModelOptionsSelected = function(value) {
+            if (arguments.length) {
+                _selected = value;
+            } else {
+                return _selected;
+            }
+        };
+    }])
     .controller(
         "PlayerCtrl",
         ["$scope", "Helper",
@@ -86,7 +125,7 @@ angular.module("app.controllers", [])
                     this.addSongToQueue(song);
                 }
                 else {
-                    console.log('removing song from queue', i);
+
                     this.removeSong(i);
                     this.songIdList.splice(this.songIdList.indexOf(song.id), 1);
                 }

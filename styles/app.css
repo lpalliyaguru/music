@@ -4,7 +4,7 @@ body {color: #639BF1!important;}
 .btn-group-xs>.btn,.btn-xs{padding:3px 15px;font-size:12px;line-height:1.5;border-radius:20px}
 .btn-primary { background-color: #35c540!important; }
 .progress-bar { background-color: #639BF1!important; background-image: none}
-.logo{background: #293E6A!important;}
+.logo{background: #293E6A!important;    z-index: 100;}
 
 .inner-page{ position: relative!important;}
 .header-actions{}
@@ -15,4 +15,47 @@ body {color: #639BF1!important;}
 .music-covers-listing .img-fake-wrapper {    height: 140px;
     width: 150px;
 
+}
+.typeahead-demo .custom-popup-wrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    background-color: #f9f9f9;
+}
+
+.typeahead-demo .custom-popup-wrapper > .message {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    color: #868686;
+}
+
+.typeahead-demo .custom-popup-wrapper > .dropdown-menu {
+    position: static;
+    float: none;
+    display: block;
+    min-width: 160px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+/* search */
+.search-list-wrapper {}
+.search-list-wrapper .icon-loading {    position: absolute;
+    right: 4px;
+    top: 6px;}
+.search-list-wrapper ul{}
+.search-list-wrapper ul li{ width: 300px}
+.search-list-wrapper ul li a{}
+.search-list-wrapper ul li img{ width: 35px}
+.search-list-wrapper ul li span.type-flag { display: block }
+.search-list-wrapper .dropdown-menu { padding: 0px!important;border: 0px solid #E8E8E8;}
+.search-list-wrapper .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    text-decoration: none;
+    outline: 0;
+    color: #fff;
+    background-color: #58b3ea;
+    /* background-image: none; */
 }

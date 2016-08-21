@@ -1,14 +1,36 @@
 <!-- Logo -->
-<div class="logo" data-ng-controller="AdminAppCtrl">
+<div class="logo" data-ng-controller="SearchCtrl">
     <a class="logo-link" href="#/">
         <i class="logo-icon fa fa-stumbleupon"></i>
         <!--<span>{{info.theme_name}}</span>-->
     </a>
+    <script type="text/ng-template" id="customTemplate.html">
+        <a href="/#/artist/{{ match.model.item_id }}" class="ng-scope">
+            <div class="row">
+                <div class="col-md-2">
+                    <img ng-src="{{ match.model.image}}" width="16"/>
+                </div>
+                <div class="col-md-10">
+                    <span ng-bind-html="match.label | uibTypeaheadHighlight:query" class="ng-binding"></span>
+                    <span class="type-flag"><i class="fa fa-music"></i> {{ match.model.type }}</span>
+                </div>
+                </div>
+        </a>
+    </script>
 
     <div class="form-group logo-search">
-        <div>
-            <input type="text" class="form-control" placeholder="Search site">
-            <span class="icon glyphicon glyphicon-search"></span>
+        <div class="search-list-wrapper">
+            <!--<input type="text" class="form-control" placeholder="Search site">-->
+            <input type="text"
+                   ng-model="asyncSelected"
+                   placeholder="Search Music"
+                   uib-typeahead="address.name for address in getLocation($viewValue)"
+                   typeahead-loading="loadingLocations"
+                   typeahead-template-url="customTemplate.html"
+                   typeahead-no-results="noResults"
+                   class="form-control">
+            <i class="icon fa fa-search"></i>
+            <img ng-show="loading" src="/images/loading.svg" class="icon-loading">
         </div>
     </div>
 </div>
@@ -26,9 +48,9 @@
 
             <a class="btn main-nav-link queue" ng-class="{active:navigation.navigationState.playlist}"
                data-nav-section="queue" data-ng-click="navigation.SwitchToPlaylist()">
-        <span class="label queue-label">
-            <span>QUEUE</span><span class="songs" ng-show="mediaPlayer.tracks > 0"> <span class="badge badge-primary">{{mediaPlayer.tracks}}</span></span>
-        </span>
+                <span class="label queue-label">
+                    <span>QUEUE</span><span class="songs" ng-show="mediaPlayer.tracks > 0"> <span class="badge badge-primary">{{mediaPlayer.tracks}}</span></span>
+                </span>
             </a>
 
         </div>

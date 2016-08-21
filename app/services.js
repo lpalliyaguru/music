@@ -464,9 +464,32 @@ angular.module("app.ui.services", []).factory("loggit", [
                     callback()
                 }
                 return pos
-            }
+            },
         };
 
+        return self;
+    }])
+    .service('UtilService', [
+        "$q", "$http",
+        function ($q, $http) {
+        var self = {
+            result : [],
+            loadSearchResult : function(query){
+                var deferred = $q.defer();
+                deferred.resolve(self.result);
+
+                $http.get(apiUrl + '/api/search?q=' + query).success(function(data){
+                    self.result = [];
+                    angular.forEach(data.data, function(result){
+                        self.result.push({
+                            "id" : result.id,
+                            "text" : result.name
+                        });
+                    });
+                });
+                return deferred.promise;
+            },
+        }
         return self;
     }])
     .factory(

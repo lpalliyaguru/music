@@ -115,7 +115,7 @@
                             <div class="music-listing__songs albumlist" >
 
                                 <div class="album-wrapper"
-                                     ng-repeat="album in artist.albums | filter:searchText" ng-hide="album.songs.length == 0">
+                                     ng-repeat="album in artist.albums" ng-hide="album.songs.length == 0">
 
                                     <div class="album_image">
                                         <img ng-src="{{album.image}}" alt="album image"/>
