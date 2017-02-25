@@ -67,18 +67,22 @@ angular.module("app.controllers", [])
 
         $scope.selected = undefined;
         $scope.loading = false;
+        $scope.searchOpen = false;
+        $scope.searchText='';
+        $scope.list = [];
         $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-        $scope.getLocation = function(val) {
+        $scope.search = function() {
+            console.log('here');
             $scope.loading = true;
             return $http.get(apiUrl + '/api/search', {
                 params: {
-                    search: val,
+                    search: $scope.searchText,
                     sensor: false
                 }
             }).then(function(response){
-                var list = [];
+                $scope.list = [];
                 for( i in response.data.data ) {
-                    list.push({
+                    $scope.list.push({
                         name : response.data.data[i].name,
                         id : response.data.data[i].id,
                         image : response.data.data[i].image,

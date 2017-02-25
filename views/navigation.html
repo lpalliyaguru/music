@@ -21,15 +21,32 @@
     <div class="form-group logo-search">
         <div class="search-list-wrapper">
             <!--<input type="text" class="form-control" placeholder="Search site">-->
-            <input type="text"
-                   ng-model="asyncSelected"
-                   placeholder="Search Music"
-                   uib-typeahead="address.name for address in getLocation($viewValue)"
-                   typeahead-loading="loadingLocations"
-                   typeahead-template-url="customTemplate.html"
-                   typeahead-no-results="noResults"
-                   class="form-control">
-            <i class="icon fa fa-search"></i>
+            <a class="pointer" ng-click="searchOpen=true"><i class="icon fa fa-search"></i></a>
+            <div ng-show="searchOpen" class="overlay overlay-cornershape">
+                <a class="overlay-close pointer" ng-click="searchOpen=false"></a>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="text"
+                                   ng-model="searchText"
+                                   ng-keyup="search()"
+                                   placeholder="Search Music"
+                                   class="form-control">
+                                   <!--uib-typeahead="address.name for address in getLocation($viewValue)"
+                                   typeahead-loading="loadingLocations"
+                                   typeahead-template-url="customTemplate.html"
+                                   typeahead-no-results="noResults"-->
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3" ng-repeat="item in list">
+                            <img ng-src="{{ item.image}}">
+                            <p>{{ item.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <img ng-show="loading" src="/images/loading.svg" class="icon-loading">
         </div>
     </div>
