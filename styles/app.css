@@ -11,12 +11,11 @@ body {color: #639BF1!important;}
 .inner-page{ position: relative!important;}
 .header-actions{}
 .header-actions .signin-link{ font-size: 13px; }
-.music-covers-listing .list-item__image {
-    height: 140px;}
+.music-covers-listing .list-item__image {  height: 140px;}
 .music-covers-listing .artist-item { height: 200px}
-.music-covers-listing .img-fake-wrapper {    height: 140px;
+.music-covers-listing .img-fake-wrapper {
+    height: 140px;
     width: 150px;
-
 }
 .typeahead-demo .custom-popup-wrapper {
     position: absolute;
@@ -26,13 +25,11 @@ body {color: #639BF1!important;}
     display: none;
     background-color: #f9f9f9;
 }
-
 .typeahead-demo .custom-popup-wrapper > .message {
     padding: 10px 20px;
     border-bottom: 1px solid #ddd;
     color: #868686;
 }
-
 .typeahead-demo .custom-popup-wrapper > .dropdown-menu {
     position: static;
     float: none;
@@ -45,10 +42,25 @@ body {color: #639BF1!important;}
 }
 /* search */
 .search-list-wrapper {}
-.search-list-wrapper .icon-loading {    position: absolute;
+.search-list-wrapper .icon-loading {
+    position: absolute;
     right: 4px;
-    top: 6px;}
+    top: 6px;z-index: 200;
+}
 .search-list-wrapper ul{}
+.logo-search { margin-top: 0px; }
+.search-list-wrapper a.open-search {
+    color: #ccc;
+    padding: 10px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.search-list-wrapper a.open-search i{
+    color: #428bca!important;
+    vertical-align: middle;
+    margin-top: -3px;
+    position: inherit!important;
+}
 .search-list-wrapper ul li{ width: 300px}
 .search-list-wrapper ul li a{}
 .search-list-wrapper ul li img{ width: 35px}
@@ -59,18 +71,18 @@ body {color: #639BF1!important;}
     outline: 0;
     color: #fff;
     background-color: #58b3ea;
-    /* background-image: none; */
 }
-.overlay {     position: fixed;
+.overlay {
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    background: #cccccc ;
+    background: #fff ;
 }
 .overlay .overlay-close {
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     right: 20px;
     top: 20px;
@@ -79,5 +91,23 @@ body {color: #639BF1!important;}
     text-indent: 200%;
     background: url('/images/cross.png') no-repeat center center;
     outline: none;
-
 }
+.global-search {
+    padding: 10px;
+}
+.global-search>div.input-group {
+    width: 35%;
+    margin: 0px auto;
+}
+.global-search input {
+    margin: 0px auto;
+    border-radius: 0px 20px 20px 0!important;
+}
+.search-list>h5 {
+    font-weight: bold;
+    color: #444;
+}
+.search-list .list-item__name h5 {
+    color: #444;
+}
+

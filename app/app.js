@@ -7,24 +7,21 @@ var app = angular
         .module("app", ["ngRoute", "ngAnimate","ngResource","toastr", "app.config","ngStorage", "angular-ladda", "ui.bootstrap", "mgo-angular-wizard", "ui.tree", "ngMap", "ngTagsInput", "app.ui.ctrls", "app.ui.services", "app.controllers", "app.directives", "app.form.validation", "app.ui.form.ctrls", "app.ui.form.directives", "app.tables", "app.map", "countTo", "mediaPlayer","ngDragDrop", "app.music"])
         .run(
             ["$rootScope", "$location","loggit",
-            function ($rootScope, $location,loggit) {
+            function ($rootScope, $location, loggit) {
                 $(document).ready(function(){
-
                     setTimeout(function(){
                         $('.page-loading-overlay').addClass("loaded");
                         $('.load_circle_wrapper').addClass("loaded");
-
                         //loggit.logSuccess("Welcome to Groovy! Navigate and add songs to your playlists.");
-
                     },1000);
-
                 });
-
+                $rootScope.$on('$routeChangeStart', function(event, next, current) {
+                    $rootScope.$broadcast('closeSearchBox', next, current);
+                });
             }])
         .config(
             ["$routeProvider",
             function($routeProvider) {
-
                 return $routeProvider.when("/", {
                     redirectTo: "/dashboard"
                 }).when("/dashboard", {
@@ -114,7 +111,6 @@ var app = angular
         .config(
             ["$routeProvider", "$localStorageProvider", "$httpProvider", "toastrConfig",
             function($routeProvider, $localStorageProvider, $httpProvider, toastrConfig) {
-
                 if ($localStorageProvider.get('token')) {
                     $httpProvider.defaults.headers.common['Authentication'] = $localStorageProvider.get('token').access_token;
                 }

@@ -21,33 +21,52 @@
     <div class="form-group logo-search">
         <div class="search-list-wrapper">
             <!--<input type="text" class="form-control" placeholder="Search site">-->
-            <a class="pointer" ng-click="searchOpen=true"><i class="icon fa fa-search"></i></a>
+            <a class="pointer open-search" ng-click="showSearchBox()"><i class="icon fa fa-search  fa-2x"></i></a>
             <div ng-show="searchOpen" class="overlay overlay-cornershape">
-                <a class="overlay-close pointer" ng-click="searchOpen=false"></a>
+                <a class="overlay-close pointer" ng-click="hideSearchBox()"></a>
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
-                            <input type="text"
-                                   ng-model="searchText"
-                                   ng-keyup="search()"
-                                   placeholder="Search Music"
-                                   class="form-control">
-                                   <!--uib-typeahead="address.name for address in getLocation($viewValue)"
-                                   typeahead-loading="loadingLocations"
-                                   typeahead-template-url="customTemplate.html"
-                                   typeahead-no-results="noResults"-->
+                        <div class="col-md-12 global-search">
+                            <div class="input-group">
+                                <span class="input-group-addon" ><i class="fa fa-search"></i></span>
+                                    <input type="text"
+                                       ng-model="searchText"
 
+                                       ng-keyup="search()"
+                                       placeholder="Search Maathra"
+                                       class="form-control">
+                                    <img ng-show="loading" src="/images/loading.svg" class="icon-loading">
+                                </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3" ng-repeat="item in list">
-                            <img ng-src="{{ item.image}}">
-                            <p>{{ item.name }}</p>
+                    <div class="search-list">
+                        <h5>Artists</h5>
+                        <div class="row music-covers-listing minified">
+                            <div data-ng-repeat="item in list" class="col-md-2 artist-item ng-scope">
+                                <div class="list-item__wrap">
+                                    <div class="list-item__image sampe">
+                                        <img ng-src="{{ item.image }}" src="{{ item.image }}">
+                                        <div class="list-item__play">
+                                            <a class="list-item__play-button"
+                                               ng-click="searchOpen=false"
+                                               ng-href="#/artist/{{ item.item_id }}"
+                                               href="#/artist/{{ item.item_id }}">
+                                                <i class="fa fa-2x fa-stumbleupon"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="list-item__name">
+                                        <h5 class="ng-binding text-center">{{ item.name }}</h5>
+                                    </div>
+                                    <div class="list-item__style"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
-            <img ng-show="loading" src="/images/loading.svg" class="icon-loading">
+
         </div>
     </div>
 </div>
@@ -215,7 +234,7 @@
 
 
                         <div class="music-listing__song-name" ng-click="mediaPlayer.playPause($index)">
-                            {{ song.display_name }}
+                            {{ song.display_name | limitTo:20 }} ..
                         </div>
                         <!--<div class="music-listing__artist-name" ng-click="mediaPlayer.playPause($index)">
                           {{ song.artist.name }}

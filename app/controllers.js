@@ -9,8 +9,8 @@ angular.module("app.controllers", [])
     ["$scope", "$location", "$localStorage", "SongSrv", "PlayListSrv", "$q", "UtilService",
         function ($scope, $location, $localStorage, SongSrv, PlayListSrv, $q, UtilService) {
             this.songUpdated = false;
+            $scope.searchOpen = false;
             this.trackCurrentTime = 0;
-
             if ($scope.mediaPlayer) {
                 PlayListSrv.mediaPlayer = $scope.mediaPlayer;
                 $scope.mediaPlayer.on('timeupdate', function (event) {
@@ -59,20 +59,26 @@ angular.module("app.controllers", [])
             $scope.loadUserPlaylist();
             //NG-TypeHEAD
 
-
         }]
     )
     .controller("SearchCtrl", ["$scope", "$http", function($scope, $http){
-        var _selected;
-
-        $scope.selected = undefined;
         $scope.loading = false;
-        $scope.searchOpen = false;
+
         $scope.searchText='';
         $scope.list = [];
-        $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+        $scope.showSearchBox = function(){
+            console.log('Opening the search');
+            $scope.searchOpen = true;
+            $scope.list = [];
+        };
+        $scope.hideSearchBox = function(){
+            $scope.searchOpen = false;
+            $scope.list = [];
+        };
+        $scope.$on('closeSearchBox', function (event, next, current) {
+            $scope.hideSearchBox();
+        });
         $scope.search = function() {
-            console.log('here');
             $scope.loading = true;
             return $http.get(apiUrl + '/api/search', {
                 params: {
@@ -91,7 +97,6 @@ angular.module("app.controllers", [])
                     }) ;
                 }
                 $scope.loading = false;
-                return list;
             });
         };
         $scope.ngModelOptionsSelected = function(value) {
