@@ -6,20 +6,17 @@
 angular.module("app.controllers", [])
     .controller(
     "AdminAppCtrl",
-    ["$scope", "$location", "$localStorage", "SongSrv", "PlayListSrv", "$q", "UtilService",
-        function ($scope, $location, $localStorage, SongSrv, PlayListSrv, $q, UtilService) {
+    ["$scope", "$location", "$localStorage", "SongSrv", "PlayListSrv", "$q", "UtilService","$rootScope", "$http", 'toastr',
+        function ($scope, $location, $localStorage, SongSrv, PlayListSrv, $q, UtilService, $rootScope, $http) {
             this.songUpdated = false;
             $scope.searchOpen = false;
             this.trackCurrentTime = 0;
             if ($scope.mediaPlayer) {
                 PlayListSrv.mediaPlayer = $scope.mediaPlayer;
                 $scope.mediaPlayer.on('timeupdate', function (event) {
-                    //console.log(event);
                     this.trackCurrentTime = parseInt(event.currentTarget.currentTime);
-
                     if (!this.songUpdated && this.trackCurrentTime > 20) {
                         SongSrv.updatePlayedSong($scope.player.songQueue[$scope.mediaPlayer.currentTrack - 1], function () {
-                            //update local data
                         });
                         this.songUpdated = true;
                     }
@@ -33,10 +30,26 @@ angular.module("app.controllers", [])
 
                     this.songUpdated = false;
                 });
-            }
+            };
+            //Callbak upon FB login
+            $rootScope.$on('event:social-sign-in-success', function(event, userDetails){
+                console.log(userDetails);
+                $http.post(apiUrl + '/api/auth/social', userDetails).success(function (data) {
+
+                    if(data.success) {
+                        console.log('setting token ');
+                        $localStorage.token = data.access_token;
+                        $localStorage.user = data.user;
+                        $http.defaults.headers.common['Authentication'] = $localStorage.token.access_token;
+                        toastr.success('Logged in!');
+                        window.location.hash = '/dashboard';
+                    }
+                }).error(function () {
+                    toastr.error('Something went wrong when you log in. Please try again!');
+                });
+            });
 
             $scope.checkIfOwnPage = function () {
-
                 return _.contains(["/front", "/404", "/pages/500", "/pages/login", "/pages/signin", "/pages/signin1", "/pages/signin2", "/pages/signup", "/pages/signup1", "/pages/signup2", "/pages/forgot", "/pages/lock-screen"], $location.path());
             };
 
@@ -44,11 +57,7 @@ angular.module("app.controllers", [])
                 return _.contains(["/dashboard"], $location.path());
             };
             $scope.$storage = $localStorage;
-            $scope.info = {
-                theme_name: "Kimono",
-                user_name: "Jane Doe"
-            };
-
+            $scope.user = $localStorage.user;
             $scope.loadUserPlaylist = function () {
                 if ($localStorage.user) {
                     PlayListSrv.getPlaylists(function (playlists) {
@@ -57,7 +66,6 @@ angular.module("app.controllers", [])
                 }
             }
             $scope.loadUserPlaylist();
-            //NG-TypeHEAD
 
         }]
     )

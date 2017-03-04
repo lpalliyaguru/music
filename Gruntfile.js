@@ -246,6 +246,7 @@ module.exports = function(grunt) {
                         'bower_components/ladda/dist/spin.min.js',
                         'bower_components/ladda/dist/ladda.min.js',
                         'bower_components/angular-ladda/dist/angular-ladda.min.js',
+                        'bower_components/angularjs-social-login/angularjs-social-login.js',
                         'scripts/angular-dragdrop.js',
                         'scripts/extras.js',
                         'app/*.js'
@@ -325,7 +326,9 @@ module.exports = function(grunt) {
                     },
                     files: [
                         {expand: true, cwd: 'dist/', src: ['**'], dest: '/'},
-                        {src: 's3_index.html', dest:'index.html'}
+                        {src: 's3_index.html', dest:'index.html'},
+                        {src: 'privacy_policy.html', dest:'privacy_policy.html'},
+                        {src: 'terms.html', dest:'terms.html'}
                        // {expand: true, cwd: 'dist/views/', src: ['**'], dest:     'views/'},
                         //{expand: true, cwd: 'dist/css', src: ['**'], dest: 'css'}, // enable stream to allow large files
                         //{expand: true, cwd: 'assets/prod/', src: ['**'], dest: 'assets/', params: {CacheControl: '2000'}},

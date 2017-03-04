@@ -4,10 +4,10 @@
  **************************/
 
 var app = angular
-        .module("app", ["ngRoute", "ngAnimate","ngResource","toastr", "app.config","ngStorage", "angular-ladda", "ui.bootstrap", "mgo-angular-wizard", "ui.tree", "ngMap", "ngTagsInput", "app.ui.ctrls", "app.ui.services", "app.controllers", "app.directives", "app.form.validation", "app.ui.form.ctrls", "app.ui.form.directives", "app.tables", "app.map", "countTo", "mediaPlayer","ngDragDrop", "app.music"])
+        .module("app", ["ngRoute", "ngAnimate","ngResource","toastr", "app.config","ngStorage", "angular-ladda", "ui.bootstrap", "mgo-angular-wizard", "ui.tree", "ngMap", "ngTagsInput", "app.ui.ctrls", "app.ui.services", "app.controllers", "app.directives", "app.form.validation", "app.ui.form.ctrls", "app.ui.form.directives", "app.tables", "mediaPlayer","ngDragDrop", "app.music","socialLogin"])
         .run(
-            ["$rootScope", "$location","loggit",
-            function ($rootScope, $location, loggit) {
+            ["$rootScope", "$location","loggit", "$http",
+            function ($rootScope, $location, loggit, $http) {
                 $(document).ready(function(){
                     setTimeout(function(){
                         $('.page-loading-overlay').addClass("loaded");
@@ -18,10 +18,12 @@ var app = angular
                 $rootScope.$on('$routeChangeStart', function(event, next, current) {
                     $rootScope.$broadcast('closeSearchBox', next, current);
                 });
+
             }])
         .config(
-            ["$routeProvider",
-            function($routeProvider) {
+            ["$routeProvider", "socialProvider",
+            function($routeProvider, socialProvider) {
+                socialProvider.setFbKey({appId: FB_APP_ID, apiVersion: "v2.8"});
                 return $routeProvider.when("/", {
                     redirectTo: "/dashboard"
                 }).when("/dashboard", {
@@ -109,21 +111,18 @@ var app = angular
                 });
             }])
         .config(
-            ["$routeProvider", "$localStorageProvider", "$httpProvider", "toastrConfig",
-            function($routeProvider, $localStorageProvider, $httpProvider, toastrConfig) {
+            ["$routeProvider", "$localStorageProvider", "$httpProvider",
+            function($routeProvider, $localStorageProvider, $httpProvider) {
                 if ($localStorageProvider.get('token')) {
                     $httpProvider.defaults.headers.common['Authentication'] = $localStorageProvider.get('token').access_token;
                 }
 
-               $httpProvider.interceptors.push(function ($q) {
+                $httpProvider.interceptors.push(function ($q) {
                     return {
                         'responseError': function (responseError) {
-                            //toastrConfig.
-                            //toastrConfig.error(responseError.statusText)
                             if (responseError.status == 403 || responseError.status == 401) {
                                 location.hash = '#/pages/signin';
                             }
-
                         }
                     };
                 });
@@ -135,6 +134,7 @@ var app = angular
 /**************************
  App Map
  **************************/
+/*
 
 angular.module("app.map", []).directive("uiJqvmap", [
         function() {
@@ -372,91 +372,4 @@ angular.module("app.map", []).directive("uiJqvmap", [
             };
         }
     ]);
-
-/**************************
- Timer
- **************************/
-angular.module('countTo', []).controller("countTo", ["$scope",
-        function($scope) {
-
-            return $scope.countersmall1 = {
-                countTo: 20,
-                countFrom: 0
-            },$scope.countersmall2 = {
-                countTo: 42,
-                countFrom: 0
-            },$scope.countersmall3 = {
-                countTo: 90,
-                countFrom: 0
-            },$scope.countersmall1dash = {
-                countTo: 420,
-                countFrom: 0
-            },$scope.countersmall2dash = {
-                countTo: 742,
-                countFrom: 0
-            },$scope.countersmall3dash = {
-                countTo: 100,
-                countFrom: 0
-            };
-
-        }]).directive('countTo', ['$timeout', function ($timeout) {
-        return {
-            replace: false,
-            scope: true,
-            link: function (scope, element, attrs) {
-
-                var e = element[0];
-                var num, refreshInterval, duration, steps, step, countTo, value, increment;
-
-                var calculate = function () {
-                    refreshInterval = 30;
-                    step = 0;
-                    scope.timoutId = null;
-                    countTo = parseInt(attrs.countTo) || 0;
-                    scope.value = parseInt(attrs.value, 10) || 0;
-                    duration = (parseFloat(attrs.duration) * 1000) || 0;
-
-                    steps = Math.ceil(duration / refreshInterval);
-                    increment = ((countTo - scope.value) / steps);
-                    num = scope.value;
-                };
-
-                var tick = function () {
-                    scope.timoutId = $timeout(function () {
-                        num += increment;
-                        step++;
-                        if (step >= steps) {
-                            $timeout.cancel(scope.timoutId);
-                            num = countTo;
-                            e.textContent = countTo;
-                        } else {
-                            e.textContent = Math.round(num);
-                            tick();
-                        }
-                    }, refreshInterval);
-
-                };
-
-                var start = function () {
-                    if (scope.timoutId) {
-                        $timeout.cancel(scope.timoutId);
-                    }
-                    calculate();
-                    tick();
-                };
-
-                attrs.$observe('countTo', function (val) {
-                    if (val) {
-                        start();
-                    }
-                });
-
-                attrs.$observe('value', function (val) {
-                    start();
-                });
-
-                return true;
-            }
-        };
-
-    }]);
+*/

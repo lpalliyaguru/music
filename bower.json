@@ -34,6 +34,7 @@
     "html5shiv": "~3.7.2",
     "angular-toastr": "*",
     "ngstorage": "0.3.*",
-    "angucomplete-alt": "2.4.*"
+    "angucomplete-alt": "2.4.*",
+    "angularjs-social-login": "^2.4.5"
   }
 }
